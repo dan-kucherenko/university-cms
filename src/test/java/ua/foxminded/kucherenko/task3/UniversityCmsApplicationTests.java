@@ -1,4 +1,4 @@
-package ua.foxminded.kucherenko.task3.universitycms;
+package ua.foxminded.kucherenko.task3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

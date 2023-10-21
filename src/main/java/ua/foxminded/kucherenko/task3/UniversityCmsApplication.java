@@ -1,4 +1,4 @@
-package ua.foxminded.kucherenko.task3.universitycms;
+package ua.foxminded.kucherenko.task3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
