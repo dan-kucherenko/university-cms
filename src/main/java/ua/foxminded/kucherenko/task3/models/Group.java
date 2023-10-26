@@ -9,13 +9,17 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private int id;
+    @NonNull
     private String name;
+    @NonNull
     private String faculty;
+    @NonNull
     private String speciality;
     private int studentsQuantity;
 }

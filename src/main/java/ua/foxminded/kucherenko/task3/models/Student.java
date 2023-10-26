@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -15,8 +17,7 @@ import java.util.Date;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private int studentId;
+    private Integer studentId;
     @NonNull
     private Integer id;
     @NonNull
@@ -25,10 +26,10 @@ public class Student {
     private String lastName;
     private Date dob;
     private int age;
-    @NonNull
     private String email;
-    @NonNull
     private String phone;
-    @NonNull
     private Integer yearOfStudy;
+
+    @ManyToMany(mappedBy = "students")
+    private Set<Course> courses = new HashSet<>();
 }
