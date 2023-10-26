@@ -14,12 +14,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer studentId;
     @NonNull
-    private Integer id;
+    private Integer studentId;
+    private int groupId;
     @NonNull
     private String firstName;
     @NonNull

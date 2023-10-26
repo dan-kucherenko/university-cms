@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query("""
-            SELECT NEW Student(s.studentId, s.id, s.firstName, s.lastName)
+            SELECT NEW Student(s.studentId, s.firstName, s.lastName)
             FROM Student s
             INNER JOIN s.courses c
-            WHERE c.name = :courseName
+            WHERE c.courseName = :courseName
             """)
     List<Student> getByCourse(String courseName);
 
