@@ -6,20 +6,20 @@ CREATE TABlE IF NOT EXISTS groups
     group_faculty VARCHAR (25) NOT NULL,
     group_speciality VARCHAR (25) NOT NULL,
     students_quantity INT
-    );
+);
 CREATE TABLE IF NOT EXISTS courses
 (
     course_id          SERIAL PRIMARY KEY,
     course_name        VARCHAR(50)  NOT NULL,
     course_description VARCHAR(200) NOT NULL
-    );
+);
 
 CREATE TABLE IF NOT EXISTS departments
 (
     department_id SERIAL PRIMARY KEY,
     department_name  VARCHAR(25) NOT NULL,
     department_sphere VARCHAR(25) NOT NULL
-    );
+);
 
 CREATE TABLE IF NOT EXISTS students
 (
@@ -29,10 +29,10 @@ CREATE TABLE IF NOT EXISTS students
     last_name  VARCHAR(25) NOT NULL,
     dob DATE,
     age INT,
-    email VARCHAR(25),
+    email VARCHAR(50),
     phone VARCHAR(25),
     year_of_study INT
-    );
+);
 
 CREATE TABLE IF NOT EXISTS teachers
 (
@@ -41,11 +41,11 @@ CREATE TABLE IF NOT EXISTS teachers
     lastName VARCHAR(25) NOT NULL,
     dob DATE,
     age INT,
-    email VARCHAR(25) NOT NULL,
+    email VARCHAR(50) NOT NULL,
     phone VARCHAR(25) NOT NULL,
     department INT REFERENCES departments (department_id),
     salary  INT
-    );
+);
 
 CREATE TABLE IF NOT EXISTS lessons
 (
@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS lessons
     day_of_week VARCHAR(25) NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
-    location VARCHAR(25) NOT NULL
-    );
+    location VARCHAR(100) NOT NULL
+);
 
 
 CREATE TABLE IF NOT EXISTS student_courses
@@ -64,6 +64,4 @@ CREATE TABLE IF NOT EXISTS student_courses
     student_id INT REFERENCES students (student_id) ON DELETE CASCADE,
     course_id  INT REFERENCES courses (course_id),
     PRIMARY KEY (student_id, course_id)
-    );
-
-
+);

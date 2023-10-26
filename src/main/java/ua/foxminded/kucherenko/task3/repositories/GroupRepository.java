@@ -11,18 +11,18 @@ import java.util.List;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Integer> {
     @Query("""
-            SELECT NEW GroupStudentsInfo (g.id, g.name, COUNT(s))
+            SELECT NEW GroupStudentsInfo (g.groupId, g.groupName, COUNT(s))
             FROM Student s
-                     INNER JOIN Group g ON s.id = g.id
-            GROUP BY g.id, g.name
+                     INNER JOIN Group g ON s.groupId = g.groupId
+            GROUP BY g.groupId, g.groupName
             HAVING COUNT(g) <= :studentsNum""")
     List<GroupStudentsInfo> getGroupByStudentNum(int studentsNum);
-    @Query("SELECT g.id FROM Group g")
+    @Query("SELECT g.groupId FROM Group g")
     List<Integer> getAllGroupIds();
     @Query("""
             SELECT COUNT (*) AS num_of_students
             FROM Student s
-            WHERE s.id = :groupId
+            WHERE s.groupId = :groupId
             """)
     int getGroupQuantity(int groupId);
 }

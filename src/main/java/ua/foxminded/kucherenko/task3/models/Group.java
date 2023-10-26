@@ -14,12 +14,12 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private int id;
+    private int groupId;
     @NonNull
-    private String name;
+    private String groupName;
     @NonNull
-    private String faculty;
+    private String groupFaculty;
     @NonNull
-    private String speciality;
-    private int studentsQuantity;
+    private String groupSpeciality;
+    private Integer studentsQuantity;
 }

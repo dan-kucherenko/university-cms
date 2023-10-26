@@ -52,4 +52,24 @@ public class GroupStudentsInfo {
                 ", quantity=" + numOfStudents +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GroupStudentsInfo that = (GroupStudentsInfo) o;
+
+        if (getGroupId() != that.getGroupId()) return false;
+        if (getNumOfStudents() != that.getNumOfStudents()) return false;
+        return getGroupName() != null ? getGroupName().equals(that.getGroupName()) : that.getGroupName() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getGroupId();
+        result = 31 * result + (getGroupName() != null ? getGroupName().hashCode() : 0);
+        result = 31 * result + (int) (getNumOfStudents() ^ (getNumOfStudents() >>> 32));
+        return result;
+    }
 }
