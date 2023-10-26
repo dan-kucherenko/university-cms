@@ -37,13 +37,13 @@ CREATE TABLE IF NOT EXISTS students
 CREATE TABLE IF NOT EXISTS teachers
 (
     teacher_id SERIAL PRIMARY KEY,
-    firstName VARCHAR(25) NOT NULL,
-    lastName VARCHAR(25) NOT NULL,
+    first_name VARCHAR(25) NOT NULL,
+    last_name VARCHAR(25) NOT NULL,
     dob DATE,
     age INT,
     email VARCHAR(50) NOT NULL,
     phone VARCHAR(25) NOT NULL,
-    department INT REFERENCES departments (department_id),
+    department_id INT REFERENCES departments (department_id),
     salary  INT
 );
 

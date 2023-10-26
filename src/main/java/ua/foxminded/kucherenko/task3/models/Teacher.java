@@ -12,25 +12,26 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private int teacherId;
     @NonNull
-    private Integer id;
+    private int teacherId;
     @NonNull
     private String firstName;
     @NonNull
     private String lastName;
     private Date dob;
-    private int age;
+    private Integer age;
     @NonNull
     private String email;
     @NonNull
     private String phone;
     @NonNull
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
-    private int salary;
+    private Integer salary;
 }

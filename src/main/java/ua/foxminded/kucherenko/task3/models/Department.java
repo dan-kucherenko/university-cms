@@ -9,11 +9,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private int id;
-    private String name;
-    private String sphere;
+    private int departmentId;
+    private String departmentName;
+    private String departmentSphere;
 }
