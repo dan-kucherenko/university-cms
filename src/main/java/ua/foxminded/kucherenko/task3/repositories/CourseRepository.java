@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer> {
-    @Query("SELECT c.id FROM Course c")
+    @Query("SELECT c.courseId FROM Course c")
     List<Integer> getAllCourseIds();
 }
