@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.foxminded.kucherenko.task3.models.Department;
@@ -16,7 +15,6 @@ import java.util.List;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Testcontainers
-@ActiveProfiles("test")
 class TeacherRepositoryTest {
     @Autowired
     private TeacherRepository repository;
@@ -29,9 +27,9 @@ class TeacherRepositoryTest {
         final Department department = new Department(departmentId, "Engineering", "Technical");
         final List<Teacher> expectedTeachers = List.of(
                 new Teacher(1, "John", "Doe", "john.doe@example.com", "1234567890", department),
-                        new Teacher(3,"Bob", "Johnson", "bob.johnson@example.com", "1112233445", department)
+                new Teacher(3, "Bob", "Johnson", "bob.johnson@example.com", "1112233445", department)
 
-                );
+        );
 
         final List<Teacher> actualTeachers = repository.getByDepartmentId(departmentId);
 
