@@ -15,7 +15,7 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private int id;
+    private int lessonId;
     @ManyToOne
     private Group group;
     private String dayOfWeek;

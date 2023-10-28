@@ -17,12 +17,13 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
+    @NonNull
     private int courseId;
     @NonNull
     private String courseName;
     private String courseDescription;
     @ManyToOne
-    private Department courseDepartment;
+    private Department department;
     @ManyToMany
     @JoinTable(
             name = "student_courses",
