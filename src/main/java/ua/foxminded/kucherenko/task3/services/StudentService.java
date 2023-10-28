@@ -8,7 +8,6 @@ import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -26,9 +25,13 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(int id) {
+    public Optional<Student> getStudentById(int studentId) {
+        if(studentId < 1){
+            throw new IllegalArgumentException("Student id can't be negative or zero");
+        }
+
         LOGGER.debug("Getting student by id");
-        return studentRepository.findById(id);
+        return studentRepository.findById(studentId);
     }
 
     public List<Integer> getAllStudentIds() {
@@ -47,34 +50,45 @@ public class StudentService {
     }
 
     public Student saveStudent(Student student) {
+        if(student.getAge() < 0){
+            throw new IllegalArgumentException("Student can't have negative age");
+        } else if(student.getYearOfStudy() < 0) {
+            throw new IllegalArgumentException("Student can't have negative year of study");
+        }
+
         LOGGER.debug("New student has been saved");
         return studentRepository.save(student);
     }
 
-    public void updateStudent(Integer studentId, Student updatedStudent) {
-        Optional<Student> existingStudentOptional = studentRepository.findById(studentId);
-
-        if (existingStudentOptional.isPresent()) {
-            Student existingStudent = existingStudentOptional.get();
-            existingStudent.setFirstName(updatedStudent.getFirstName());
-            existingStudent.setLastName(updatedStudent.getLastName());
-            existingStudent.setDob(updatedStudent.getDob());
-            existingStudent.setAge(updatedStudent.getAge());
-            existingStudent.setEmail(updatedStudent.getEmail());
-            existingStudent.setPhone(updatedStudent.getPhone());
-            existingStudent.setYearOfStudy(updatedStudent.getYearOfStudy());
-
-            studentRepository.save(existingStudent);
-
-            LOGGER.debug("Student with ID {} has been updated", studentId);
-        } else {
-            LOGGER.error("Student not found with ID: {}", studentId);
-            throw new NoSuchElementException("Student not found with ID: " + studentId);
+    public void updateStudent(int studentId, Student updatedStudent) {
+        if(studentId < 1){
+            throw new IllegalArgumentException("Student id can't be negative or zero");
         }
+
+        Optional<Student> existingStudentOptional = studentRepository.findById(studentId);
+        existingStudentOptional.orElseThrow(() -> new IllegalArgumentException("Student with given id wasn't found"));
+
+        Student existingStudent = existingStudentOptional.get();
+
+        existingStudent.setFirstName(updatedStudent.getFirstName());
+        existingStudent.setLastName(updatedStudent.getLastName());
+        existingStudent.setDob(updatedStudent.getDob());
+        existingStudent.setAge(updatedStudent.getAge());
+        existingStudent.setEmail(updatedStudent.getEmail());
+        existingStudent.setPhone(updatedStudent.getPhone());
+        existingStudent.setYearOfStudy(updatedStudent.getYearOfStudy());
+
+        studentRepository.save(existingStudent);
+
+        LOGGER.debug("Student with ID {} has been updated", studentId);
     }
 
-    public void deleteStudent(int id) {
+    public void deleteStudent(int studentId) {
+        if(studentId < 1){
+            throw new IllegalArgumentException("Student id can't be negative or zero");
+        }
+
         LOGGER.debug("Student was deleted");
-        studentRepository.deleteById(id);
+        studentRepository.deleteById(studentId);
     }
 }

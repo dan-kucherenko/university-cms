@@ -8,7 +8,6 @@ import ua.foxminded.kucherenko.task3.models.Course;
 import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -26,9 +25,12 @@ public class CourseService {
         return repository.findAll();
     }
 
-    public Optional<Course> getCourseById(Integer id) {
+    public Optional<Course> getCourseById(int courseId) {
+        if (courseId < 1) {
+            throw new IllegalArgumentException("Course id can't be less than 1");
+        }
         LOGGER.debug("Looking for a course by id");
-        return repository.findById(id);
+        return repository.findById(courseId);
     }
 
     public List<Integer> getAllCourseIds() {
@@ -42,26 +44,29 @@ public class CourseService {
     }
 
     public void updateCourse(int courseId, Course updatedCourse) {
-        Optional<Course> existingCourseOptional = repository.findById(courseId);
-
-        if (existingCourseOptional.isPresent()) {
-            Course existingCourse = existingCourseOptional.get();
-            existingCourse.setName(updatedCourse.getName());
-            existingCourse.setDescription(updatedCourse.getDescription());
-            existingCourse.setDepartment(updatedCourse.getDepartment());
-            existingCourse.setStudents(updatedCourse.getStudents());
-
-            repository.save(existingCourse);
-
-            LOGGER.debug("Course with ID {} has been updated", courseId);
-        } else {
-            LOGGER.error("Course not found with ID: {}", courseId);
-            throw new NoSuchElementException("Course not found with ID: " + courseId);
+        if (courseId < 1) {
+            throw new IllegalArgumentException("Error in course id: id can't be less than 1");
         }
+
+        Optional<Course> existingCourseOptional = repository.findById(courseId);
+        existingCourseOptional.orElseThrow(() -> new IllegalArgumentException("Course not found with ID: " + courseId));
+
+        Course existingCourse = existingCourseOptional.get();
+        existingCourse.setCourseName(updatedCourse.getCourseName());
+        existingCourse.setCourseDescription(updatedCourse.getCourseDescription());
+        existingCourse.setDepartment(updatedCourse.getDepartment());
+        existingCourse.setStudents(updatedCourse.getStudents());
+
+        repository.save(existingCourse);
+
+        LOGGER.debug("Course with ID {} has been updated", courseId);
     }
 
-    public void deleteCourse(Integer id) {
+    public void deleteCourse(int courseId) {
+        if (courseId < 1) {
+            throw new IllegalArgumentException("Error in course id: id can't be negative");
+        }
         LOGGER.debug("Course has been deleted by id");
-        repository.deleteById(id);
+        repository.deleteById(courseId);
     }
 }

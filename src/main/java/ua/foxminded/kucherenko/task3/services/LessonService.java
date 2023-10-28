@@ -8,7 +8,6 @@ import ua.foxminded.kucherenko.task3.models.Lesson;
 import ua.foxminded.kucherenko.task3.repositories.LessonRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -26,9 +25,13 @@ public class LessonService {
         return lessonRepository.findAll();
     }
 
-    public Optional<Lesson> getLessonById(Integer id) {
+    public Optional<Lesson> getLessonById(int lessonId) {
+        if (lessonId < 1) {
+            throw new IllegalArgumentException("Lesson id can't be negative or zero");
+        }
+
         LOGGER.debug("Getting the lesson by id");
-        return lessonRepository.findById(id);
+        return lessonRepository.findById(lessonId);
     }
 
     public void saveLesson(Lesson lesson) {
@@ -37,28 +40,32 @@ public class LessonService {
     }
 
     public void updateLesson(int lessonId, Lesson updatedLesson) {
-        Optional<Lesson> existingLessonOptional = lessonRepository.findById(lessonId);
-
-        if (existingLessonOptional.isPresent()) {
-            Lesson existingLesson = existingLessonOptional.get();
-            existingLesson.setGroup(updatedLesson.getGroup());
-            existingLesson.setDayOfWeek(updatedLesson.getDayOfWeek());
-            existingLesson.setStartTime(updatedLesson.getStartTime());
-            existingLesson.setEndTime(updatedLesson.getEndTime());
-            existingLesson.setLocation(updatedLesson.getLocation());
-            existingLesson.setCourse(updatedLesson.getCourse());
-
-            lessonRepository.save(existingLesson);
-
-            LOGGER.debug("Lesson with ID {} has been updated", lessonId);
-        } else {
-            LOGGER.error("Lesson not found with ID: {}", lessonId);
-            throw new NoSuchElementException("Lesson not found with ID: " + lessonId);
+        if (lessonId < 1) {
+            throw new IllegalArgumentException("Lesson id can't be negative or zero");
         }
+
+        Optional<Lesson> existingLessonOptional = lessonRepository.findById(lessonId);
+        existingLessonOptional.orElseThrow(() -> new IllegalArgumentException("Lesson not found with ID: " + lessonId));
+
+        Lesson existingLesson = existingLessonOptional.get();
+        existingLesson.setGroup(updatedLesson.getGroup());
+        existingLesson.setDayOfWeek(updatedLesson.getDayOfWeek());
+        existingLesson.setStartTime(updatedLesson.getStartTime());
+        existingLesson.setEndTime(updatedLesson.getEndTime());
+        existingLesson.setLocation(updatedLesson.getLocation());
+        existingLesson.setCourse(updatedLesson.getCourse());
+
+        lessonRepository.save(existingLesson);
+
+        LOGGER.debug("Lesson with ID {} has been updated", lessonId);
     }
 
-    public void deleteLesson(Integer id) {
+    public void deleteLesson(int lessonId) {
+        if (lessonId < 1) {
+            throw new IllegalArgumentException("Lesson id can't be negative or zero");
+        }
+
         LOGGER.debug("Lesson is deleted");
-        lessonRepository.deleteById(id);
+        lessonRepository.deleteById(lessonId);
     }
 }

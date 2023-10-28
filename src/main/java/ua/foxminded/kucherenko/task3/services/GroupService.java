@@ -9,7 +9,6 @@ import ua.foxminded.kucherenko.task3.models.GroupStudentsInfo;
 import ua.foxminded.kucherenko.task3.repositories.GroupRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,12 +26,19 @@ public class GroupService {
         return groupRepository.findAll();
     }
 
-    public Optional<Group> getGroupById(int id) {
+    public Optional<Group> getGroupById(int groupId) {
+        if (groupId < 1) {
+            throw new IllegalArgumentException("Group id can't be negative or zero");
+        }
         LOGGER.debug("Looking for a group by id");
-        return groupRepository.findById(id);
+        return groupRepository.findById(groupId);
     }
 
     public List<GroupStudentsInfo> getGroupsByStudentNum(int studentsNum) {
+        if (studentsNum < 0) {
+            throw new IllegalArgumentException("Students number can't be negative");
+        }
+
         LOGGER.debug("Getting groups by student num");
         return groupRepository.getGroupByStudentNum(studentsNum);
     }
@@ -43,36 +49,50 @@ public class GroupService {
     }
 
     public int getGroupQuantity(int groupId) {
+        if (groupId < 1) {
+            throw new IllegalArgumentException("Group id can't be negative or zero");
+        }
+
         LOGGER.debug("Getting number of students in the group");
         return groupRepository.getGroupQuantity(groupId);
     }
 
     public void saveGroup(Group group) {
+        if (group.getStudentsQuantity() < 0) {
+            throw new IllegalArgumentException("Students number can't be negative");
+        }
         LOGGER.debug("New group is saved");
         groupRepository.save(group);
     }
 
     public void updateGroup(int groupId, Group updatedGroup) {
-        Optional<Group> existingGroupOptional = groupRepository.findById(groupId);
-
-        if (existingGroupOptional.isPresent()) {
-            Group existingGroup = existingGroupOptional.get();
-            existingGroup.setName(updatedGroup.getName());
-            existingGroup.setFaculty(updatedGroup.getFaculty());
-            existingGroup.setSpeciality(updatedGroup.getSpeciality());
-            existingGroup.setStudentsQuantity(updatedGroup.getStudentsQuantity());
-
-            groupRepository.save(existingGroup);
-
-            LOGGER.debug("Group with ID {} has been updated", groupId);
-        } else {
-            LOGGER.error("Group not found with ID: {}", groupId);
-            throw new NoSuchElementException("Group not found with ID: " + groupId);
+        if (groupId < 1 || updatedGroup.getGroupId() < 1) {
+            throw new IllegalArgumentException("Group id can't be negative or zero");
+        } else if (updatedGroup.getStudentsQuantity() < 0) {
+            throw new IllegalArgumentException("Students number can't be negative");
         }
+
+        Optional<Group> existingGroupOptional = groupRepository.findById(groupId);
+        existingGroupOptional.orElseThrow(() -> new IllegalArgumentException("Group not found with ID: " + groupId));
+
+        Group existingGroup = existingGroupOptional.get();
+        existingGroup.setGroupName(updatedGroup.getGroupName());
+        existingGroup.setGroupFaculty(updatedGroup.getGroupFaculty());
+        existingGroup.setGroupSpeciality(updatedGroup.getGroupSpeciality());
+        existingGroup.setStudentsQuantity(updatedGroup.getStudentsQuantity());
+
+        groupRepository.save(existingGroup);
+
+        LOGGER.debug("Group with ID {} has been updated", groupId);
     }
 
-    public void deleteGroup(int id) {
+
+    public void deleteGroup(int groupId) {
+        if (groupId < 1) {
+            throw new IllegalArgumentException("Group id can't be negative or zero");
+        }
+
         LOGGER.debug("Group deleted by id");
-        groupRepository.deleteById(id);
+        groupRepository.deleteById(groupId);
     }
 }
