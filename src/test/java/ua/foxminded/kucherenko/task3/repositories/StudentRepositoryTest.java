@@ -36,7 +36,8 @@ class StudentRepositoryTest {
         final String courseName = "English";
         final List<Student> resultStudents = repository.getByCourse(courseName);
         final List<Student> expectedStudents = List.of(
-                new Student(5, "1Charlie1", "Brown")
+                new Student(4, "Alice", "Williams"),
+                new Student(7, "1Charlie3", "Brown")
         );
         Assertions.assertEquals(expectedStudents.size(), resultStudents.size());
         Assertions.assertEquals(expectedStudents, resultStudents);

@@ -12,7 +12,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Testcontainers
-class StudentCourseTest {
+class StudentCourseRepositoryTest {
     @Autowired
     private StudentCourseRepository repository;
 
