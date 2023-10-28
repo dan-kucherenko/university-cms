@@ -26,7 +26,7 @@ public class StudentService {
     }
 
     public Optional<Student> getStudentById(int studentId) {
-        if(studentId < 1){
+        if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
 
@@ -50,9 +50,9 @@ public class StudentService {
     }
 
     public Student saveStudent(Student student) {
-        if(student.getAge() < 0){
+        if (student.getAge() < 0) {
             throw new IllegalArgumentException("Student can't have negative age");
-        } else if(student.getYearOfStudy() < 0) {
+        } else if (student.getYearOfStudy() < 0) {
             throw new IllegalArgumentException("Student can't have negative year of study");
         }
 
@@ -61,7 +61,7 @@ public class StudentService {
     }
 
     public void updateStudent(int studentId, Student updatedStudent) {
-        if(studentId < 1){
+        if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
 
@@ -84,7 +84,7 @@ public class StudentService {
     }
 
     public void deleteStudent(int studentId) {
-        if(studentId < 1){
+        if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
 

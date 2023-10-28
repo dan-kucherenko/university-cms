@@ -19,6 +19,7 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     List<GroupStudentsInfo> getGroupByStudentNum(int studentsNum);
     @Query("SELECT g.groupId FROM Group g")
     List<Integer> getAllGroupIds();
+
     @Query("""
             SELECT COUNT (*) AS num_of_students
             FROM Student s
