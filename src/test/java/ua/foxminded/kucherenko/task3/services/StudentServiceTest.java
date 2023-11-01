@@ -1,9 +1,7 @@
 package ua.foxminded.kucherenko.task3.services;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,8 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,16 +25,16 @@ class StudentServiceTest {
     @Test
     void getAllStudentIds() {
         final int studentsIdListSize = 7;
-        final Integer[] expectedStudentIds = new Integer[]{1, 2, 3, 4, 5, 6, 7};
+        final List<Integer> expectedStudentIds = List.of(1, 2, 3, 4, 5, 6, 7);
 
-        when(studentRepository.getAllStudentIds()).thenReturn(Arrays.asList(expectedStudentIds));
+        when(studentRepository.getAllStudentIds()).thenReturn(expectedStudentIds);
 
-        List<Integer> allStudentIds = studentService.getAllStudentIds();
+        final List<Integer> allStudentIds = studentService.getAllStudentIds();
 
         verify(studentRepository, times(1)).getAllStudentIds();
 
         Assertions.assertEquals(studentsIdListSize, allStudentIds.size());
-        Assertions.assertEquals(Arrays.asList(expectedStudentIds), allStudentIds);
+        Assertions.assertEquals(expectedStudentIds, allStudentIds);
     }
 
     @Test
@@ -48,7 +44,7 @@ class StudentServiceTest {
 
         when(studentRepository.getByCourse(courseName)).thenReturn(expectedStudents);
 
-        List<Student> resultStudents = studentService.getStudentsByCourse(courseName);
+        final List<Student> resultStudents = studentService.getStudentsByCourse(courseName);
 
         verify(studentRepository, times(1)).getByCourse(courseName);
 
@@ -65,7 +61,7 @@ class StudentServiceTest {
 
         when(studentRepository.getIdByName(firstName, lastName)).thenReturn(Collections.singletonList(expectedStudentId));
 
-        List<Integer> studentIds = studentService.getStudentIdsByName(firstName, lastName);
+        final List<Integer> studentIds = studentService.getStudentIdsByName(firstName, lastName);
 
         verify(studentRepository, times(1)).getIdByName(firstName, lastName);
 

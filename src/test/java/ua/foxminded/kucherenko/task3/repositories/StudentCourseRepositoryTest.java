@@ -24,7 +24,7 @@ class StudentCourseRepositoryTest {
 
         final int expectedCoursesNum = 3;
 
-        final int actualCoursesNum = repository.count(studentId);
+        final int actualCoursesNum = repository.countCourseByStudentId(studentId);
         Assertions.assertEquals(expectedCoursesNum, actualCoursesNum);
     }
 

@@ -9,7 +9,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.foxminded.kucherenko.task3.models.GroupStudentsInfo;
 
-import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -23,10 +22,10 @@ class GroupRepositoryTest {
     @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql"})
     void getAllGroupIds() {
         final int groupsNumber = 10;
-        final Integer[] expectedGroupIds = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        final List<Integer> expectedGroupIds = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         final List<Integer> groupsIds = repository.getAllGroupIds();
         Assertions.assertEquals(groupsNumber, groupsIds.size());
-        Assertions.assertEquals(Arrays.stream(expectedGroupIds).toList(), groupsIds);
+        Assertions.assertEquals(expectedGroupIds, groupsIds);
     }
 
     @Test
@@ -34,7 +33,7 @@ class GroupRepositoryTest {
     void getGroupByStudentNum() {
         final int studentsNum = 2;
         final int expectedGroupsNum = 2;
-        final List<GroupStudentsInfo> resultingGroups = repository.getGroupByStudentNum(studentsNum);
+        final List<GroupStudentsInfo> resultingGroups = repository.getGroupByStudentsQuantity(studentsNum);
         final List<GroupStudentsInfo> expectedGroups = List.of(
                 new GroupStudentsInfo(2, "GroupB", 2),
                 new GroupStudentsInfo(1, "GroupA", 2)

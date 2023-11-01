@@ -9,7 +9,6 @@ import ua.foxminded.kucherenko.task3.models.Department;
 import ua.foxminded.kucherenko.task3.models.Teacher;
 import ua.foxminded.kucherenko.task3.repositories.TeacherRepository;
 
-import java.util.HashSet;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -30,11 +29,11 @@ class TeacherServiceTest {
                 new Teacher(3, "Bob", "Johnson", "bob.johnson@example.com", "1112233445", department)
         );
 
-        when(teacherRepository.getByDepartmentId(departmentId)).thenReturn(expectedTeachers);
+        when(teacherRepository.getTeachersByDepartmentDepartmentId(departmentId)).thenReturn(expectedTeachers);
 
-        List<Teacher> actualTeachers = teacherService.getTeachersByDepartment(departmentId);
+        final List<Teacher> actualTeachers = teacherService.getTeachersByDepartment(departmentId);
 
-        verify(teacherRepository, times(1)).getByDepartmentId(departmentId);
+        verify(teacherRepository, times(1)).getTeachersByDepartmentDepartmentId(departmentId);
 
         Assertions.assertNotNull(actualTeachers);
         Assertions.assertEquals(expectedTeachers, actualTeachers);

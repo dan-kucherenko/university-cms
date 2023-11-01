@@ -34,7 +34,7 @@ class TeacherRepositoryTest {
 
         );
 
-        final List<Teacher> actualTeachers = repository.getByDepartmentId(departmentId);
+        final List<Teacher> actualTeachers = repository.getTeachersByDepartmentDepartmentId(departmentId);
 
         Assertions.assertNotNull(actualTeachers);
         Assertions.assertEquals(expectedTeachers, actualTeachers);

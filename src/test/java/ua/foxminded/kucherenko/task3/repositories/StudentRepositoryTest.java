@@ -9,7 +9,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.foxminded.kucherenko.task3.models.Student;
 
-import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -23,10 +22,10 @@ class StudentRepositoryTest {
     @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql", "/sample_data/students_samples.sql"})
     void getAllStudentIds() {
         final int studentsIdListSize = 7;
-        final Integer[] expectedStudentIds = new Integer[]{1, 2, 3, 4, 5, 6, 7};
-        List<Integer> allStudentIds = repository.getAllStudentIds();
+        final List<Integer> expectedStudentIds = List.of(1, 2, 3, 4, 5, 6, 7);
+        final List<Integer> allStudentIds = repository.getAllStudentIds();
         Assertions.assertEquals(studentsIdListSize, allStudentIds.size());
-        Assertions.assertEquals(Arrays.stream(expectedStudentIds).toList(), allStudentIds);
+        Assertions.assertEquals(expectedStudentIds, allStudentIds);
     }
 
     @Test

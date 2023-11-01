@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -22,9 +21,9 @@ class CourseRepositoryTest {
     @Sql({"/database/create_tables.sql","/sample_data/courses_samples.sql"})
     void getAllCourseIds() {
         final int coursesIdListSize = 10;
-        Integer[] coursesIds = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        List<Integer> allSCoursesIds = repository.getAllCourseIds();
+        final List<Integer> coursesIds = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        final List<Integer> allSCoursesIds = repository.getAllCourseIds();
         Assertions.assertEquals(coursesIdListSize, allSCoursesIds.size());
-        Assertions.assertEquals(Arrays.stream(coursesIds).toList(), allSCoursesIds);
+        Assertions.assertEquals(coursesIds, allSCoursesIds);
     }
 }
