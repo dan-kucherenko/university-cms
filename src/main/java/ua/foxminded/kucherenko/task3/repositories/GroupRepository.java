@@ -13,17 +13,17 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     @Query("""
             SELECT NEW GroupStudentsInfo (g.groupId, g.groupName, COUNT(s))
             FROM Student s
-                     INNER JOIN Group g ON s.groupId = g.groupId
+                     INNER JOIN Group g ON s.group.groupId = g.groupId
             GROUP BY g.groupId, g.groupName
             HAVING COUNT(g) <= :studentsNum""")
-    List<GroupStudentsInfo> getGroupByStudentNum(int studentsNum);
+    List<GroupStudentsInfo> getGroupByStudentsQuantity(int studentsNum);
     @Query("SELECT g.groupId FROM Group g")
     List<Integer> getAllGroupIds();
 
     @Query("""
             SELECT COUNT (*) AS num_of_students
             FROM Student s
-            WHERE s.groupId = :groupId
+            WHERE s.group.groupId = :groupId
             """)
     int getGroupQuantity(int groupId);
 }

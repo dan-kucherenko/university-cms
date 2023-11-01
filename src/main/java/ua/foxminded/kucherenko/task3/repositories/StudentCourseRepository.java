@@ -9,7 +9,7 @@ import ua.foxminded.kucherenko.task3.models.Student;
 @Repository
 public interface StudentCourseRepository extends JpaRepository<Student, Integer> {
     @Query("SELECT COUNT(c) FROM Student s JOIN s.courses c WHERE s.studentId = :studentId")
-    int count(int studentId);
+    int countCourseByStudentId(int studentId);
 
     @Query(value = "SELECT COUNT(*) > 0 FROM student_courses WHERE student_id = :studentId AND course_id = :courseId", nativeQuery = true)
     boolean exists(int studentId, int courseId);

@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
-    @Query("SELECT t FROM Teacher t WHERE t.department.departmentId = :departmentId")
-    List<Teacher> getByDepartmentId(int departmentId);
+    List<Teacher> getTeachersByDepartmentDepartmentId(int departmentId);
 }
