@@ -72,7 +72,6 @@ public class StudentService {
 
         existingStudent.setFirstName(updatedStudent.getFirstName());
         existingStudent.setLastName(updatedStudent.getLastName());
-        existingStudent.setDob(updatedStudent.getDob());
         existingStudent.setAge(updatedStudent.getAge());
         existingStudent.setEmail(updatedStudent.getEmail());
         existingStudent.setPhone(updatedStudent.getPhone());

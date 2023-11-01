@@ -40,7 +40,7 @@ public class GroupService {
         }
 
         LOGGER.debug("Getting groups by student num");
-        return groupRepository.getGroupByStudentNum(studentsNum);
+        return groupRepository.getGroupByStudentsQuantity(studentsNum);
     }
 
     public List<Integer> getAllGroupIds() {

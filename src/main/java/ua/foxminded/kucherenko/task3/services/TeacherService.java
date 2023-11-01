@@ -39,7 +39,7 @@ public class TeacherService {
             throw new IllegalArgumentException("Department id can't be negative or zero");
         }
         LOGGER.debug("Getting the teacher by department");
-        return repository.getByDepartmentId(departmentId);
+        return repository.getTeachersByDepartmentDepartmentId(departmentId);
     }
 
     public Teacher saveTeacher(Teacher teacher) {
@@ -58,7 +58,6 @@ public class TeacherService {
         Teacher existingTeacher = existingTeacherOptional.get();
         existingTeacher.setFirstName(updatedTeacher.getFirstName());
         existingTeacher.setLastName(updatedTeacher.getLastName());
-        existingTeacher.setDob(updatedTeacher.getDob());
         existingTeacher.setAge(updatedTeacher.getAge());
         existingTeacher.setEmail(updatedTeacher.getEmail());
         existingTeacher.setPhone(updatedTeacher.getPhone());
