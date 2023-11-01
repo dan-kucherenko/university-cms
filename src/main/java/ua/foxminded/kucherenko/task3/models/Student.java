@@ -21,12 +21,13 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
     private Integer studentId;
-    private int groupId;
+    @OneToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
     @NonNull
     private String firstName;
     @NonNull
     private String lastName;
-    private Date dob;
     private int age;
     private String email;
     private String phone;

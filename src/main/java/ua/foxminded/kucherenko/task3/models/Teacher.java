@@ -23,7 +23,6 @@ public class Teacher {
     private String firstName;
     @NonNull
     private String lastName;
-    private Date dob;
     private Integer age;
     @NonNull
     private String email;
@@ -33,5 +32,5 @@ public class Teacher {
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-    private Integer salary;
+    private Double salary;
 }
