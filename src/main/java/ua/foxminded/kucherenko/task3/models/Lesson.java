@@ -18,7 +18,6 @@ public class Lesson {
     private int lessonId;
     @ManyToOne
     private Group group;
-    private String dayOfWeek;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String location;

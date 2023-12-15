@@ -21,5 +21,4 @@ public class Group {
     private String groupFaculty;
     @NonNull
     private String groupSpeciality;
-    private Integer studentsQuantity;
 }

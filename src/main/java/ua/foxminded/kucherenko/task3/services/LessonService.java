@@ -49,7 +49,6 @@ public class LessonService {
 
         Lesson existingLesson = existingLessonOptional.get();
         existingLesson.setGroup(updatedLesson.getGroup());
-        existingLesson.setDayOfWeek(updatedLesson.getDayOfWeek());
         existingLesson.setStartTime(updatedLesson.getStartTime());
         existingLesson.setEndTime(updatedLesson.getEndTime());
         existingLesson.setLocation(updatedLesson.getLocation());

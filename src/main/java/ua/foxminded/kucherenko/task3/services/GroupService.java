@@ -58,18 +58,13 @@ public class GroupService {
     }
 
     public void saveGroup(Group group) {
-        if (group.getStudentsQuantity() < 0) {
-            throw new IllegalArgumentException("Students number can't be negative");
-        }
         LOGGER.debug("New group is saved");
         groupRepository.save(group);
     }
 
     public void updateGroup(int groupId, Group updatedGroup) {
-        if (groupId < 1 || updatedGroup.getGroupId() < 1) {
+        if (groupId < 1) {
             throw new IllegalArgumentException("Group id can't be negative or zero");
-        } else if (updatedGroup.getStudentsQuantity() < 0) {
-            throw new IllegalArgumentException("Students number can't be negative");
         }
 
         Optional<Group> existingGroupOptional = groupRepository.findById(groupId);
@@ -79,7 +74,6 @@ public class GroupService {
         existingGroup.setGroupName(updatedGroup.getGroupName());
         existingGroup.setGroupFaculty(updatedGroup.getGroupFaculty());
         existingGroup.setGroupSpeciality(updatedGroup.getGroupSpeciality());
-        existingGroup.setStudentsQuantity(updatedGroup.getStudentsQuantity());
 
         groupRepository.save(existingGroup);
 
