@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 import ua.foxminded.kucherenko.task3.models.Course;
 import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
@@ -19,7 +18,6 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@ActiveProfiles("test")
 class StudentCourseServiceTest {
     @MockBean
     private StudentCourseRepository studentCourseRepository;
