@@ -38,4 +38,29 @@ class TeacherServiceTest {
         Assertions.assertNotNull(actualTeachers);
         Assertions.assertEquals(expectedTeachers, actualTeachers);
     }
+
+    @Test
+    void getTeacherById_TeacherId_ShouldThrowException() {
+        final int teacherId = -4;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> teacherService.getTeacherById(teacherId));
+    }
+
+    @Test
+    void getTeachersByDepartment_NegativeDepartmentId_ShouldThrowException() {
+        final int departmentId = -2;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> teacherService.getTeachersByDepartment(departmentId));
+    }
+
+    @Test
+    void updateTeacher_NegativeTeacherId_ShouldThrowException () {
+        final int teacherId = -1;
+        final Teacher teacher = new Teacher();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> teacherService.updateTeacher(teacherId, teacher));
+    }
+
+    @Test
+    void deleteTeacher_NegativeTeacherId_ShouldThrowException () {
+        final int teacherId = -1;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> teacherService.deleteTeacher(teacherId));
+    }
 }

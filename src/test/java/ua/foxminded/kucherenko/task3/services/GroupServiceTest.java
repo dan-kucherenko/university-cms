@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import ua.foxminded.kucherenko.task3.models.Group;
 import ua.foxminded.kucherenko.task3.models.GroupStudentsInfo;
 import ua.foxminded.kucherenko.task3.repositories.GroupRepository;
 
@@ -72,8 +73,27 @@ class GroupServiceTest {
     }
 
     @Test
+    void getGroupById_NegativeGroupId_ShouldThrowsException(){
+        final int groupId = -1;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> groupService.getGroupById(groupId));
+    }
+
+    @Test
     void getGroupByStudentsNum_NegativeQuantity_ShouldThrowException() {
         final int studentNum = -2;
         Assertions.assertThrows(IllegalArgumentException.class, () -> groupService.getGroupsByStudentNum(studentNum));
+    }
+
+    @Test
+    void updateGroup_NegativeGroupId_ShouldThrowException() {
+        final int groupId = -1;
+        final Group updatedGroup = new Group();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> groupService.updateGroup(groupId, updatedGroup));
+    }
+
+    @Test
+    void deleteGroup_NegativeGroupId_ShouldThrowException() {
+        final int groupId = -1;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> groupService.deleteGroup(groupId));
     }
 }

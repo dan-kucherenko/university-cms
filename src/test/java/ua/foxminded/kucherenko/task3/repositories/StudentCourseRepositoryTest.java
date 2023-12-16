@@ -58,7 +58,7 @@ class StudentCourseRepositoryTest {
     @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql", "/sample_data/courses_samples.sql",
             "/sample_data/students_samples.sql", "/sample_data/student_courses_samples.sql"})
     @Transactional
-    void removeStudentToCourse() {
+    void removeStudentFromCourse() {
         final int studentId = 1;
         final int courseId = 3;
 

@@ -1,10 +1,12 @@
 package ua.foxminded.kucherenko.task3.services;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import ua.foxminded.kucherenko.task3.models.Course;
 import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
 
 import java.util.List;
@@ -32,5 +34,24 @@ class CourseServiceTest {
 
         Assertions.assertEquals(coursesIdListSize, allSCoursesIds.size());
         Assertions.assertEquals(coursesIds, allSCoursesIds);
+    }
+
+    @Test
+    void getCourseById_NegativeCourseId_ThrowsException(){
+        final int courseId = -1;
+        Assert.assertThrows(IllegalArgumentException.class, ()-> courseService.getCourseById(courseId));
+    }
+
+    @Test
+    void updateCourse_NegativeCourseId_ThrowsException(){
+        final int courseId = -1;
+        final Course course = new Course();
+        Assert.assertThrows(IllegalArgumentException.class, () -> courseService.updateCourse(courseId, course));
+    }
+
+    @Test
+    void deleteCourse_NegativeCourseId_ThrowsException(){
+        final int courseId = -1;
+        Assert.assertThrows(IllegalArgumentException.class, () -> courseService.deleteCourse(courseId));
     }
 }

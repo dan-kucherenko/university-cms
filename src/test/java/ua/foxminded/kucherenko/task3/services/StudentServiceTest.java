@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import ua.foxminded.kucherenko.task3.models.Group;
 import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -64,5 +66,36 @@ class StudentServiceTest {
         verify(studentRepository, times(1)).getIdByName(firstName, lastName);
 
         Assertions.assertEquals(expectedStudentId, studentIds.get(0));
+    }
+
+    @Test
+    void getStudentById_NegativeStudentId_ShouldThrowException(){
+        final int studentId = -1;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> studentService.getStudentById(studentId));
+    }
+
+    @Test
+    void saveStudent_NegativeStudentId_ShouldThrowException(){
+        final int studentId = 2;
+        final int age = -1;
+        final Group group = new Group("TestGroup", "test", "test");
+
+        final Student student = new Student(studentId, group, "TestName", "TestLastName", age, "test_email", "", 3, new HashSet<>());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> studentService.saveStudent(student));
+    }
+
+    @Test
+    void updateStudent_NegativeYearOfStudy_ShouldThrowException(){
+        final Integer studentId = 2;
+        final Integer yearOfStudy = -1;
+        final Group group = new Group();
+        final Student student = new Student(studentId, group, "TestName", "TestLastName", 20, "test_email", "", yearOfStudy, new HashSet<>());
+        Assertions.assertThrows(IllegalArgumentException.class, () -> studentService.saveStudent(student));
+    }
+
+    @Test
+    void deleteStudent_NegativeStudentId_ShouldThrowException(){
+        final int studentId = -1;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> studentService.deleteStudent(studentId));
     }
 }
