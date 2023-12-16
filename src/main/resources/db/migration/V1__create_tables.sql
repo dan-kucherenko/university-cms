@@ -4,7 +4,7 @@ CREATE TABlE IF NOT EXISTS groups
     group_id   SERIAL PRIMARY KEY,
     group_name VARCHAR(25) NOT NULL,
     group_faculty VARCHAR (25) NOT NULL,
-    group_speciality VARCHAR (25) NOT NULL,
+    group_speciality VARCHAR (25) NOT NULL
     );
 CREATE TABLE IF NOT EXISTS courses
 (

@@ -3,7 +3,6 @@ package ua.foxminded.kucherenko.task3.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,7 +31,6 @@ public class Student {
     private String email;
     private String phone;
     private Integer yearOfStudy;
-
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
 }
