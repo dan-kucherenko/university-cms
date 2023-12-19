@@ -51,14 +51,13 @@ public class CourseService {
         Optional<Course> existingCourseOptional = repository.findById(courseId);
         existingCourseOptional.orElseThrow(() -> new IllegalArgumentException("Course not found with ID: " + courseId));
 
-        Course existingCourse = existingCourseOptional.get();
+        final Course existingCourse = existingCourseOptional.get();
         existingCourse.setCourseName(updatedCourse.getCourseName());
         existingCourse.setCourseDescription(updatedCourse.getCourseDescription());
         existingCourse.setDepartment(updatedCourse.getDepartment());
         existingCourse.setStudents(updatedCourse.getStudents());
 
         repository.save(existingCourse);
-
         LOGGER.debug("Course with ID {} has been updated", courseId);
     }
 

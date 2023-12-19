@@ -68,8 +68,7 @@ public class StudentService {
         Optional<Student> existingStudentOptional = studentRepository.findById(studentId);
         existingStudentOptional.orElseThrow(() -> new IllegalArgumentException("Student with given id wasn't found"));
 
-        Student existingStudent = existingStudentOptional.get();
-
+        final Student existingStudent = existingStudentOptional.get();
         existingStudent.setFirstName(updatedStudent.getFirstName());
         existingStudent.setLastName(updatedStudent.getLastName());
         existingStudent.setAge(updatedStudent.getAge());
@@ -78,7 +77,6 @@ public class StudentService {
         existingStudent.setYearOfStudy(updatedStudent.getYearOfStudy());
 
         studentRepository.save(existingStudent);
-
         LOGGER.debug("Student with ID {} has been updated", studentId);
     }
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Course;
 import ua.foxminded.kucherenko.task3.models.Student;
-import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentCourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
@@ -17,32 +16,26 @@ import java.util.Optional;
 public class StudentCourseService {
     private final StudentRepository studentRepository;
     private final StudentCourseRepository studentCourseRepository;
-    private final CourseRepository courseRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentCourseService.class);
 
     @Autowired
     public StudentCourseService(StudentRepository studentRepository,
-                                StudentCourseRepository studentCourseRepository,
-                                CourseRepository courseRepository) {
+                                StudentCourseRepository studentCourseRepository) {
         this.studentRepository = studentRepository;
         this.studentCourseRepository = studentCourseRepository;
-        this.courseRepository = courseRepository;
     }
 
     public void addStudentToCourse(Student student, Course course) {
         if (course.getCourseId() <= 0) {
             throw new IllegalArgumentException("Invalid course id: it should be more than 0");
         }
-        List<Integer> studentIds = studentRepository.getIdByName(student.getFirstName(), student.getLastName());
-        Integer studentId = studentIds.isEmpty() ? null : studentIds.get(0);
-        if (studentId == null) {
-            throw new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist");
-        }
-        if (studentCourseRepository.exists(studentId, course.getCourseId())) {
+        Optional<Student> dbStudent = studentRepository.findById(student.getStudentId());
+        dbStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
+        if (studentCourseRepository.exists(dbStudent.get().getStudentId(), course.getCourseId())) {
             throw new IllegalArgumentException("This record already exists");
         }
-        studentCourseRepository.addStudentToCourse(studentId, course.getCourseId());
-        LOGGER.debug("Student with id {} was successfully added to course {}", studentId, course.getCourseId());
+        studentCourseRepository.addStudentToCourse(dbStudent.get().getStudentId(), course.getCourseId());
+        LOGGER.debug("Student with id {} was successfully added to course {}", dbStudent.get().getStudentId(), course.getCourseId());
     }
 
     public void removeStudentFromCourse(Student student, Course course) {

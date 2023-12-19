@@ -70,13 +70,12 @@ public class GroupService {
         Optional<Group> existingGroupOptional = groupRepository.findById(groupId);
         existingGroupOptional.orElseThrow(() -> new IllegalArgumentException("Group not found with ID: " + groupId));
 
-        Group existingGroup = existingGroupOptional.get();
+        final Group existingGroup = existingGroupOptional.get();
         existingGroup.setGroupName(updatedGroup.getGroupName());
         existingGroup.setGroupFaculty(updatedGroup.getGroupFaculty());
         existingGroup.setGroupSpeciality(updatedGroup.getGroupSpeciality());
 
         groupRepository.save(existingGroup);
-
         LOGGER.debug("Group with ID {} has been updated", groupId);
     }
 

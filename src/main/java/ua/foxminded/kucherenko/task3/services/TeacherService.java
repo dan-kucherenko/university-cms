@@ -43,7 +43,7 @@ public class TeacherService {
     }
 
     public Teacher saveTeacher(Teacher teacher) {
-        LOGGER.debug("Getting the teacher by department");
+        LOGGER.debug("Saving the teacher");
         return repository.save(teacher);
     }
 
@@ -55,7 +55,7 @@ public class TeacherService {
         Optional<Teacher> existingTeacherOptional = repository.findById(teacherId);
         existingTeacherOptional.orElseThrow(() -> new IllegalArgumentException("Teacher with given id wasn't found"));
 
-        Teacher existingTeacher = existingTeacherOptional.get();
+        final Teacher existingTeacher = existingTeacherOptional.get();
         existingTeacher.setFirstName(updatedTeacher.getFirstName());
         existingTeacher.setLastName(updatedTeacher.getLastName());
         existingTeacher.setAge(updatedTeacher.getAge());

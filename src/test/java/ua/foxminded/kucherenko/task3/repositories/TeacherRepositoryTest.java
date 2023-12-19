@@ -7,13 +7,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import ua.foxminded.kucherenko.task3.models.Course;
 import ua.foxminded.kucherenko.task3.models.Department;
 import ua.foxminded.kucherenko.task3.models.Teacher;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

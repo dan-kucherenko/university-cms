@@ -47,7 +47,7 @@ public class LessonService {
         Optional<Lesson> existingLessonOptional = lessonRepository.findById(lessonId);
         existingLessonOptional.orElseThrow(() -> new IllegalArgumentException("Lesson not found with ID: " + lessonId));
 
-        Lesson existingLesson = existingLessonOptional.get();
+        final Lesson existingLesson = existingLessonOptional.get();
         existingLesson.setGroup(updatedLesson.getGroup());
         existingLesson.setStartTime(updatedLesson.getStartTime());
         existingLesson.setEndTime(updatedLesson.getEndTime());
@@ -55,7 +55,6 @@ public class LessonService {
         existingLesson.setCourse(updatedLesson.getCourse());
 
         lessonRepository.save(existingLesson);
-
         LOGGER.debug("Lesson with ID {} has been updated", lessonId);
     }
 
