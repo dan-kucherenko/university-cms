@@ -71,7 +71,7 @@ public class StudentService {
         final Student existingStudent = existingStudentOptional.get();
         existingStudent.setFirstName(updatedStudent.getFirstName());
         existingStudent.setLastName(updatedStudent.getLastName());
-        existingStudent.setAge(updatedStudent.getAge());
+        existingStudent.setDateOfBirth(updatedStudent.getDateOfBirth());
         existingStudent.setEmail(updatedStudent.getEmail());
         existingStudent.setPhone(updatedStudent.getPhone());
         existingStudent.setYearOfStudy(updatedStudent.getYearOfStudy());
