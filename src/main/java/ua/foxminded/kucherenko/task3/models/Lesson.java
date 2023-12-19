@@ -3,9 +3,8 @@ package ua.foxminded.kucherenko.task3.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "lessons")
@@ -26,7 +25,7 @@ public class Lesson {
     @ManyToOne
     private Course course;
 
-    public Date getDayOfWeek(){
-        return Timestamp.valueOf(startTime);
+    public DayOfWeek getDayOfWeek(){
+        return startTime.getDayOfWeek();
     }
 }
