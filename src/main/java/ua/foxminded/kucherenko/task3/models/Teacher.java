@@ -3,6 +3,9 @@ package ua.foxminded.kucherenko.task3.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
@@ -23,7 +26,7 @@ public class Teacher {
     private String firstName;
     @NonNull
     private String lastName;
-    private Integer age;
+    private Date dateOfBirth;
     @NonNull
     private String email;
     @NonNull
@@ -33,4 +36,11 @@ public class Teacher {
     @JoinColumn(name = "department_id")
     private Department department;
     private Double salary;
+
+    public int getAge() {
+        final LocalDate dateOfBirthLocalDate = dateOfBirth.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        return Period.between(dateOfBirthLocalDate, LocalDate.now()).getYears();
+    }
 }

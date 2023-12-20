@@ -52,13 +52,13 @@ public class TeacherService {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");
         }
 
-        Optional<Teacher> existingTeacherOptional = repository.findById(teacherId);
-        existingTeacherOptional.orElseThrow(() -> new IllegalArgumentException("Teacher with given id wasn't found"));
+        Optional<Teacher> foundTeacher = repository.findById(teacherId);
+        foundTeacher.orElseThrow(() -> new IllegalArgumentException("Teacher with given id wasn't found"));
 
-        final Teacher existingTeacher = existingTeacherOptional.get();
+        final Teacher existingTeacher = foundTeacher.get();
         existingTeacher.setFirstName(updatedTeacher.getFirstName());
         existingTeacher.setLastName(updatedTeacher.getLastName());
-        existingTeacher.setAge(updatedTeacher.getAge());
+        existingTeacher.setDateOfBirth(updatedTeacher.getDateOfBirth());
         existingTeacher.setEmail(updatedTeacher.getEmail());
         existingTeacher.setPhone(updatedTeacher.getPhone());
         existingTeacher.setDepartment(updatedTeacher.getDepartment());
