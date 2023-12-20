@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Student;
+import ua.foxminded.kucherenko.task3.repositories.StudentCourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
 import java.util.List;
@@ -14,10 +15,13 @@ import java.util.Optional;
 public class StudentService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
+    private final StudentCourseRepository studentCourseRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository,
+                          StudentCourseRepository studentCourseRepository) {
         this.studentRepository = studentRepository;
+        this.studentCourseRepository = studentCourseRepository;
     }
 
     public List<Student> getAllStudents() {
@@ -50,9 +54,7 @@ public class StudentService {
     }
 
     public Student saveStudent(Student student) {
-        if (student.getAge() < 0) {
-            throw new IllegalArgumentException("Student can't have negative age");
-        } else if (student.getYearOfStudy() < 0) {
+        if (student.getYearOfStudy() < 0) {
             throw new IllegalArgumentException("Student can't have negative year of study");
         }
 
@@ -87,5 +89,15 @@ public class StudentService {
 
         LOGGER.debug("Student was deleted");
         studentRepository.deleteById(studentId);
+    }
+
+    public boolean exists(int studentId, int courseId) {
+        if (studentId < 1) {
+            throw new IllegalArgumentException("Student id cant be negative or less than zero");
+        } else if (courseId < 1) {
+            throw new IllegalArgumentException("Course id cant be negative or less than zero");
+        }
+        LOGGER.debug("Checking the existence of student_course with student_id {} and course_id {}", studentId, courseId);
+        return studentCourseRepository.exists(studentId, courseId);
     }
 }

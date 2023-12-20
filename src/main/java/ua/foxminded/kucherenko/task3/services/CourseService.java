@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Course;
+import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
+import ua.foxminded.kucherenko.task3.repositories.StudentCourseRepository;
+import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,16 +16,20 @@ import java.util.Optional;
 @Service
 public class CourseService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseService.class);
-    private final CourseRepository repository;
+    private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
+    private final StudentCourseRepository studentCourseRepository;
 
     @Autowired
-    public CourseService(CourseRepository repository) {
-        this.repository = repository;
+    public CourseService(CourseRepository courseRepository, StudentRepository studentRepository, StudentCourseRepository studentCourseRepository) {
+        this.courseRepository = courseRepository;
+        this.studentRepository = studentRepository;
+        this.studentCourseRepository = studentCourseRepository;
     }
 
     public List<Course> getAllCourses() {
         LOGGER.debug("Getting all the courses");
-        return repository.findAll();
+        return courseRepository.findAll();
     }
 
     public Optional<Course> getCourseById(int courseId) {
@@ -30,17 +37,12 @@ public class CourseService {
             throw new IllegalArgumentException("Course id can't be less than 1");
         }
         LOGGER.debug("Looking for a course by id");
-        return repository.findById(courseId);
-    }
-
-    public List<Integer> getAllCourseIds() {
-        LOGGER.debug("Getting all the course ids");
-        return repository.getAllCourseIds();
+        return courseRepository.findById(courseId);
     }
 
     public void saveCourse(Course course) {
         LOGGER.debug("New course is saved");
-        repository.save(course);
+        courseRepository.save(course);
     }
 
     public void updateCourse(int courseId, Course updatedCourse) {
@@ -48,7 +50,7 @@ public class CourseService {
             throw new IllegalArgumentException("Error in course id: id can't be less than 1");
         }
 
-        Optional<Course> existingCourseOptional = repository.findById(courseId);
+        Optional<Course> existingCourseOptional = courseRepository.findById(courseId);
         existingCourseOptional.orElseThrow(() -> new IllegalArgumentException("Course not found with ID: " + courseId));
 
         final Course existingCourse = existingCourseOptional.get();
@@ -57,7 +59,7 @@ public class CourseService {
         existingCourse.setDepartment(updatedCourse.getDepartment());
         existingCourse.setStudents(updatedCourse.getStudents());
 
-        repository.save(existingCourse);
+        courseRepository.save(existingCourse);
         LOGGER.debug("Course with ID {} has been updated", courseId);
     }
 
@@ -66,6 +68,38 @@ public class CourseService {
             throw new IllegalArgumentException("Error in course id: id can't be negative");
         }
         LOGGER.debug("Course has been deleted by id");
-        repository.deleteById(courseId);
+        courseRepository.deleteById(courseId);
+    }
+
+    public void addStudentToCourse(Student student, Course course) {
+        if (course.getCourseId() <= 0) {
+            throw new IllegalArgumentException("Invalid course id: it should be more than 0");
+        }
+        Optional<Student> dbStudent = studentRepository.findById(student.getStudentId());
+        dbStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
+
+        Optional<Course> dbCourse = courseRepository.findById(course.getCourseId());
+        dbCourse.orElseThrow(() -> new IllegalArgumentException("Invalid course id: course id is less than 0 or course doesn't exist"));
+
+        if (studentCourseRepository.exists(dbStudent.get().getStudentId(), course.getCourseId())) {
+            throw new IllegalArgumentException("This record already exists");
+        }
+        studentCourseRepository.addStudentToCourse(dbStudent.get().getStudentId(), course.getCourseId());
+        LOGGER.debug("Student with id {} was successfully added to course {}", dbStudent.get().getStudentId(), course.getCourseId());
+    }
+
+    public void removeStudentFromCourse(Student student, Course course) {
+        if (course.getCourseId() <= 0) {
+            throw new IllegalArgumentException("Course Id should be between 1 and 10");
+        }
+        Optional<Student> dbStudent = studentRepository.findById(student.getStudentId());
+        dbStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
+
+        Integer studentId = dbStudent.get().getStudentId();
+        if (!studentCourseRepository.exists(studentId, course.getCourseId())) {
+            throw new IllegalArgumentException("This record doesn't exist");
+        }
+        studentCourseRepository.removeStudentFromCourse(studentId, course.getCourseId());
+        LOGGER.debug("Student with id {} was successfully removed from course {}", studentId, course.getCourseId());
     }
 }
