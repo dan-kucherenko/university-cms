@@ -67,10 +67,10 @@ public class GroupService {
             throw new IllegalArgumentException("Group id can't be negative or zero");
         }
 
-        Optional<Group> existingGroupOptional = groupRepository.findById(groupId);
-        existingGroupOptional.orElseThrow(() -> new IllegalArgumentException("Group not found with ID: " + groupId));
+        Optional<Group> foundGroup = groupRepository.findById(groupId);
+        foundGroup.orElseThrow(() -> new IllegalArgumentException("Group not found with ID: " + groupId));
 
-        final Group existingGroup = existingGroupOptional.get();
+        final Group existingGroup = foundGroup.get();
         existingGroup.setGroupName(updatedGroup.getGroupName());
         existingGroup.setGroupFaculty(updatedGroup.getGroupFaculty());
         existingGroup.setGroupSpeciality(updatedGroup.getGroupSpeciality());

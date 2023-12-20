@@ -67,10 +67,10 @@ public class StudentService {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
 
-        Optional<Student> existingStudentOptional = studentRepository.findById(studentId);
-        existingStudentOptional.orElseThrow(() -> new IllegalArgumentException("Student with given id wasn't found"));
+        Optional<Student> foundStudent = studentRepository.findById(studentId);
+        foundStudent.orElseThrow(() -> new IllegalArgumentException("Student with given id wasn't found"));
 
-        final Student existingStudent = existingStudentOptional.get();
+        final Student existingStudent = foundStudent.get();
         existingStudent.setFirstName(updatedStudent.getFirstName());
         existingStudent.setLastName(updatedStudent.getLastName());
         existingStudent.setDateOfBirth(updatedStudent.getDateOfBirth());

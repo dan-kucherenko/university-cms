@@ -34,34 +34,34 @@ public class AdministratorService {
         return repository.findById(adminId);
     }
 
-    public Administrator saveAdministrator(Administrator administrator) {
+    public Administrator saveAdministrator(Administrator admin) {
         LOGGER.debug("Saving the administrator");
-        return repository.save(administrator);
+        return repository.save(admin);
     }
 
-    public void updateAdminData(int administratorId, Administrator administrator) {
-        if (administratorId < 1) {
+    public void updateAdminData(int adminId, Administrator admin) {
+        if (adminId < 1) {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }
 
-        Optional<Administrator> foundAdministrator = repository.findById(administratorId);
+        Optional<Administrator> foundAdministrator = repository.findById(adminId);
         foundAdministrator.orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
 
-        final Administrator dbAdministrator = foundAdministrator.get();
-        dbAdministrator.setFirstName(administrator.getFirstName());
-        dbAdministrator.setLastName(administrator.getLastName());
-        dbAdministrator.setEmail(administrator.getEmail());
-        dbAdministrator.setAge(administrator.getAge());
-        dbAdministrator.setPhone(administrator.getPhone());
+        final Administrator existingAdmin = foundAdministrator.get();
+        existingAdmin.setFirstName(admin.getFirstName());
+        existingAdmin.setLastName(admin.getLastName());
+        existingAdmin.setEmail(admin.getEmail());
+        existingAdmin.setAge(admin.getAge());
+        existingAdmin.setPhone(admin.getPhone());
 
-        repository.save(dbAdministrator);
-        LOGGER.debug("Administrator with id {} has been updated", administratorId);
+        repository.save(existingAdmin);
+        LOGGER.debug("Administrator with id {} has been updated", adminId);
     }
 
-    public void deleteAdministrator(int administratorId) {
-        if (administratorId < 1) {
+    public void deleteAdministrator(int adminId) {
+        if (adminId < 1) {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }
-        repository.deleteById(administratorId);
+        repository.deleteById(adminId);
     }
 }

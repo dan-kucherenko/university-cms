@@ -1,6 +1,5 @@
 package ua.foxminded.kucherenko.task3.models;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;

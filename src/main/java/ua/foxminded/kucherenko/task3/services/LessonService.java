@@ -44,10 +44,10 @@ public class LessonService {
             throw new IllegalArgumentException("Lesson id can't be negative or zero");
         }
 
-        Optional<Lesson> existingLessonOptional = lessonRepository.findById(lessonId);
-        existingLessonOptional.orElseThrow(() -> new IllegalArgumentException("Lesson not found with ID: " + lessonId));
+        Optional<Lesson> foundLesson = lessonRepository.findById(lessonId);
+        foundLesson.orElseThrow(() -> new IllegalArgumentException("Lesson not found with ID: " + lessonId));
 
-        final Lesson existingLesson = existingLessonOptional.get();
+        final Lesson existingLesson = foundLesson.get();
         existingLesson.setGroup(updatedLesson.getGroup());
         existingLesson.setStartTime(updatedLesson.getStartTime());
         existingLesson.setEndTime(updatedLesson.getEndTime());

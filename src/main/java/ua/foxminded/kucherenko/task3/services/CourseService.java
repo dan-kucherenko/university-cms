@@ -50,10 +50,10 @@ public class CourseService {
             throw new IllegalArgumentException("Error in course id: id can't be less than 1");
         }
 
-        Optional<Course> existingCourseOptional = courseRepository.findById(courseId);
-        existingCourseOptional.orElseThrow(() -> new IllegalArgumentException("Course not found with ID: " + courseId));
+        Optional<Course> foundCourse = courseRepository.findById(courseId);
+        foundCourse.orElseThrow(() -> new IllegalArgumentException("Course not found with ID: " + courseId));
 
-        final Course existingCourse = existingCourseOptional.get();
+        final Course existingCourse = foundCourse.get();
         existingCourse.setCourseName(updatedCourse.getCourseName());
         existingCourse.setCourseDescription(updatedCourse.getCourseDescription());
         existingCourse.setDepartment(updatedCourse.getDepartment());
@@ -75,27 +75,27 @@ public class CourseService {
         if (course.getCourseId() <= 0) {
             throw new IllegalArgumentException("Invalid course id: it should be more than 0");
         }
-        Optional<Student> dbStudent = studentRepository.findById(student.getStudentId());
-        dbStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
+        Optional<Student> foundStudent = studentRepository.findById(student.getStudentId());
+        foundStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
 
         Optional<Course> dbCourse = courseRepository.findById(course.getCourseId());
         dbCourse.orElseThrow(() -> new IllegalArgumentException("Invalid course id: course id is less than 0 or course doesn't exist"));
 
-        if (studentCourseRepository.exists(dbStudent.get().getStudentId(), course.getCourseId())) {
+        if (studentCourseRepository.exists(foundStudent.get().getStudentId(), course.getCourseId())) {
             throw new IllegalArgumentException("This record already exists");
         }
-        studentCourseRepository.addStudentToCourse(dbStudent.get().getStudentId(), course.getCourseId());
-        LOGGER.debug("Student with id {} was successfully added to course {}", dbStudent.get().getStudentId(), course.getCourseId());
+        studentCourseRepository.addStudentToCourse(foundStudent.get().getStudentId(), course.getCourseId());
+        LOGGER.debug("Student with id {} was successfully added to course {}", foundStudent.get().getStudentId(), course.getCourseId());
     }
 
     public void removeStudentFromCourse(Student student, Course course) {
         if (course.getCourseId() <= 0) {
             throw new IllegalArgumentException("Course Id should be between 1 and 10");
         }
-        Optional<Student> dbStudent = studentRepository.findById(student.getStudentId());
-        dbStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
+        Optional<Student> foundStudent = studentRepository.findById(student.getStudentId());
+        foundStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
 
-        Integer studentId = dbStudent.get().getStudentId();
+        Integer studentId = foundStudent.get().getStudentId();
         if (!studentCourseRepository.exists(studentId, course.getCourseId())) {
             throw new IllegalArgumentException("This record doesn't exist");
         }
