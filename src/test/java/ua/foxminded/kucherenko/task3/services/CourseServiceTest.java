@@ -29,8 +29,6 @@ class CourseServiceTest {
 
     @Autowired
     private CourseService courseService;
-    @Autowired
-    private StudentService studentService;
 
     @Test
     void getCourseById_NegativeCourseId_ThrowsException(){
@@ -60,16 +58,13 @@ class CourseServiceTest {
 
         when(studentCourseRepository.exists(studentId, courseId)).thenReturn(false);
         doNothing().when(studentCourseRepository).addStudentToCourse(studentId, courseId);
-
-        Assertions.assertFalse(studentService.exists(studentId, courseId));
         when(studentRepository.getIdByName(student.getFirstName(), student.getLastName())).thenReturn(List.of(studentId));
         when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
         when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
-        courseService.addStudentToCourse(student, course);
-        when(studentCourseRepository.exists(studentId, courseId)).thenReturn(true);
-        Assertions.assertTrue(studentService.exists(studentId, courseId));
 
-        verify(studentCourseRepository, times(3)).exists(studentId, courseId);
+        courseService.addStudentToCourse(student, course);
+
+        verify(studentCourseRepository, times(1)).exists(studentId, courseId);
         verify(studentCourseRepository, times(1)).addStudentToCourse(studentId, courseId);
     }
 
@@ -82,16 +77,13 @@ class CourseServiceTest {
 
         when(studentCourseRepository.exists(studentId, courseId)).thenReturn(true);
         doNothing().when(studentCourseRepository).removeStudentFromCourse(studentId, courseId);
-
-        Assertions.assertTrue(studentService.exists(studentId, courseId));
         when(studentRepository.getIdByName(student.getFirstName(), student.getLastName())).thenReturn(List.of(studentId));
         when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
         when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
-        courseService.removeStudentFromCourse(student, course);
-        when(studentCourseRepository.exists(studentId, courseId)).thenReturn(false);
-        Assertions.assertFalse(studentService.exists(studentId, courseId));
 
-        verify(studentCourseRepository, times(3)).exists(studentId, courseId);
+        courseService.removeStudentFromCourse(student, course);
+
+        verify(studentCourseRepository, times(1)).exists(studentId, courseId);
         verify(studentCourseRepository, times(1)).removeStudentFromCourse(studentId, courseId);
     }
 

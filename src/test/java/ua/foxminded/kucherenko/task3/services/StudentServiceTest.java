@@ -9,8 +9,8 @@ import ua.foxminded.kucherenko.task3.models.Group;
 import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
+import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -80,7 +80,7 @@ class StudentServiceTest {
         final Integer studentId = 2;
         final Integer yearOfStudy = -1;
         final Group group = new Group();
-        final Date dateOfBirth = new Date();
+        final LocalDate dateOfBirth = LocalDate.now();
         final Student student = new Student(studentId, group, "TestName", "TestLastName", dateOfBirth, "test_email", "", yearOfStudy, new HashSet<>());
         Assertions.assertThrows(IllegalArgumentException.class, () -> studentService.saveStudent(student));
     }
