@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS students
     "group"  INT REFERENCES groups (group_id),
     first_name VARCHAR(25) NOT NULL,
     last_name  VARCHAR(25) NOT NULL,
-    age INT,
+    date_of_birth DATE,
     email VARCHAR(25),
     phone VARCHAR(25),
     year_of_study INT
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS teachers
     teacher_id SERIAL PRIMARY KEY,
     firstName VARCHAR(25) NOT NULL,
     lastName VARCHAR(25) NOT NULL,
-    age INT,
+    date_of_birth DATE,
     email VARCHAR(25) NOT NULL,
     phone VARCHAR(25) NOT NULL,
     department_id INT REFERENCES departments (department_id),
@@ -59,7 +59,6 @@ CREATE TABLE IF NOT EXISTS administrators
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(25) NOT NULL,
     last_name VARCHAR(25) NOT NULL,
-    age INT,
     email VARCHAR(25) NOT NULL,
     phone VARCHAR(25) NOT NULL
 );
