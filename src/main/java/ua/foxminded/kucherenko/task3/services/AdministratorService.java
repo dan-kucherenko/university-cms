@@ -51,7 +51,6 @@ public class AdministratorService {
         existingAdmin.setFirstName(admin.getFirstName());
         existingAdmin.setLastName(admin.getLastName());
         existingAdmin.setEmail(admin.getEmail());
-        existingAdmin.setAge(admin.getAge());
         existingAdmin.setPhone(admin.getPhone());
 
         repository.save(existingAdmin);

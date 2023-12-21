@@ -19,7 +19,6 @@ public class Administrator {
     private String firstName;
     @NonNull
     private String lastName;
-    private Integer age;
     private String email;
     private String phone;
 }
