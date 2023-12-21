@@ -90,7 +90,7 @@ public class CourseService {
 
     public void removeStudentFromCourse(Student student, Course course) {
         if (course.getCourseId() <= 0) {
-            throw new IllegalArgumentException("Course Id should be between 1 and 10");
+            throw new IllegalArgumentException("Course Id should be more then 0 or 0");
         }
         Optional<Student> foundStudent = studentRepository.findById(student.getStudentId());
         foundStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
