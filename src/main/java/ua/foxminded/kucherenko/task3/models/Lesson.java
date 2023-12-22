@@ -22,6 +22,10 @@ public class Lesson {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String location;
+    @NonNull
+    @OneToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
     @ManyToOne
     private Course course;
 

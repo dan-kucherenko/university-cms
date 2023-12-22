@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS administrators
 CREATE TABLE IF NOT EXISTS lessons
 (
     lesson_id  SERIAL PRIMARY KEY,
+    teacher_id INT REFERENCES teachers (teacher_id),
     course_id  INT REFERENCES courses (course_id),
     group_id   INT REFERENCES groups (group_id),
     start_time TIME         NOT NULL,
