@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS teachers
     email VARCHAR(25) NOT NULL,
     phone VARCHAR(25) NOT NULL,
     department_id INT REFERENCES departments (department_id),
-    salary  INT
+    salary DOUBLE
     );
 
 CREATE TABLE IF NOT EXISTS lessons
