@@ -23,7 +23,7 @@ public class Lesson {
     private LocalDateTime endTime;
     private String location;
     @NonNull
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
     @ManyToOne
