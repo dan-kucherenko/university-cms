@@ -18,6 +18,7 @@ public class Lesson {
     @Setter(AccessLevel.NONE)
     private int lessonId;
     @ManyToOne
+    @JoinColumn(name = "group_id")
     private Group group;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -27,6 +28,7 @@ public class Lesson {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
     @ManyToOne
+    @JoinColumn(name = "course_id")
     private Course course;
 
     public DayOfWeek getDayOfWeek(){

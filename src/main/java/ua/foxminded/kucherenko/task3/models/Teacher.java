@@ -39,4 +39,8 @@ public class Teacher {
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
+
+    public String getInitials() {
+        return lastName + ' ' + firstName.charAt(0) + '.';
+    }
 }
