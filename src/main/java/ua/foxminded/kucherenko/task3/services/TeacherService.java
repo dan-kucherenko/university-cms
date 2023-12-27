@@ -3,6 +3,9 @@ package ua.foxminded.kucherenko.task3.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Teacher;
 import ua.foxminded.kucherenko.task3.repositories.TeacherRepository;
@@ -20,9 +23,10 @@ public class TeacherService {
         this.repository = repository;
     }
 
-    public List<Teacher> getAllTeachers() {
+    public Page<Teacher> getAllTeachers(int page, int size) {
         LOGGER.debug("Getting all the teachers");
-        return repository.findAll();
+        final Pageable pageable = PageRequest.of(page, size);
+        return repository.findAll(pageable);
     }
 
     public Optional<Teacher> getTeacherById(int teacherId) {
