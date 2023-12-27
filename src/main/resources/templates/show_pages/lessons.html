@@ -28,12 +28,25 @@
         <tbody>
         <tr th:each="lesson : ${lessons}">
             <th scope="row" th:text="${lesson.getLessonId()}"/>
-            <td th:text="${lesson.getGroup().getGroupName()}"/>
+            <td>
+                <span th:if="${lesson.getGroup()!=null}" th:text="${lesson.getGroup().getGroupName()}"/>
+                <span th:text="null" th:unless="${lesson.getGroup()!=null}"/>
+            </td>
             <td th:text="${lesson.getStartTime()}"/>
             <td th:text="${lesson.getEndTime()}"/>
-            <td th:text="${lesson.getLocation()}"/>
-            <td th:text="${lesson.getTeacher().getInitials()}"/>
-            <td th:text="${lesson.getCourse().getCourseName()}"/>
+            <td>
+                <span th:if="${lesson.getLocation()!=null}" th:text="${lesson.getLocation()}"/>
+                <span th:text="null"/>
+            </td>
+            <td>
+                <span th:if="${lesson.getTeacher()!=null}" th:text="${lesson.getTeacher().getInitials()}"/>
+                <span th:text="null" th:unless="${lesson.getTeacher()!=null}"/>
+            </td>
+            <td>
+                <span th:if="${lesson.getCourse()!=null}" th:text="${lesson.getCourse().getCourseName()}"/>
+                <span th:text="null" th:unless="${lesson.getCourse()!=null}"/>
+            </td>
+
         </tr>
         </tbody>
     </table>

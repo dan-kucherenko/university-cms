@@ -26,10 +26,14 @@
         <tr th:each="course : ${courses}">
             <th scope="row" th:text="${course.getCourseId()}"/>
             <td th:text="${course.getCourseName()}"/>
-            <td th:text="${course.getCourseDescription()}"/>
+
+            <td th:text="${course.getCourseDescription()}">
+                <span th:if="${course.getCourseDescription()} != null" th:text="${course.getCourseDescription()}"/>
+                <span th:text="null"/>
+            </td>
             <td>
                 <span th:if="${course.getDepartment() != null}" th:text="${course.getDepartment().getDepartmentName()}" />
-                <span th:if="${course.getDepartment() != null}" th:text="null"/>
+                <span th:text="null"/>
             </td>
         </tr>
         </tbody>

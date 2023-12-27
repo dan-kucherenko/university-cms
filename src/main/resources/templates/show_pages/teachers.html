@@ -31,12 +31,16 @@
       <th scope="row" th:text="${teacher.getTeacherId()}"/>
       <td th:text="${teacher.getFirstName()}"/>
       <td th:text="${teacher.getLastName()}"/>
-      <td th:text="${teacher.getDateOfBirth()}"/>
-      <td th:text="${teacher.getEmail()}"/>
+      <td>
+        <span th:if="${teacher.getDateOfBirth()!=null}" th:text="${teacher.getDateOfBirth()}"/>
+        <span th:text="null" th:unless="${teacher.getDateOfBirth()!=null}"/>
+      </td>      <td th:text="${teacher.getEmail()}"/>
       <td th:text="${teacher.getPhone()}"/>
       <td th:text="${teacher.getDepartment().getDepartmentName()}"/>
-      <td th:text="${teacher.getSalary()}"/>
-    </tr>
+      <td>
+        <span th:if="${teacher.getSalary()!=null}" th:text="${teacher.getSalary()}"/>
+        <span th:text="null" th:unless="${teacher.getSalary()!=null}"/>
+      </td>    </tr>
     </tbody>
   </table>
 </div>

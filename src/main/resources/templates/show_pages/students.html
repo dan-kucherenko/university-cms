@@ -29,13 +29,28 @@
         <tbody>
         <tr th:each="student : ${students}">
             <th scope="row" th:text="${student.getStudentId()}"/>
-            <td th:text="${student.getGroup().getGroupName()}"/>
+            <td>
+                <span th:if="${student.getGroup() != null}" th:text="${student.getGroup().getGroupName()}"/>
+                <span th:text="null"/>
+            </td>
             <td th:text="${student.getFirstName()}"/>
             <td th:text="${student.getLastName()}"/>
-            <td th:text="${student.getDateOfBirth()}"/>
-            <td th:text="${student.getEmail()}"/>
-            <td th:text="${student.getPhone()}"/>
-            <td th:text="${student.getYearOfStudy()}"/>
+            <td>
+                <span th:if="${student.getDateOfBirth()!=null}" th:text="${student.getDateOfBirth()}"/>
+                <span th:text="null" th:unless="${student.getDateOfBirth()!=null}"/>
+            </td>
+            <td>
+                <span th:if="${student.getEmail()!=null}" th:text="${student.getEmail()}"/>
+                <span th:text="null" th:unless="${student.getEmail()!=null}"/>
+            </td>
+            <td>
+                <span th:if="${student.getPhone()!=null}" th:text="${student.getPhone()}"/>
+                <span th:text="null" th:unless="${student.getPhone()!=null}"/>
+            </td>
+            <td>
+                <span th:if="${student.getYearOfStudy()!=null}" th:text="${student.getYearOfStudy()}"/>
+                <span th:text="null" th:unless="${student.getYearOfStudy()!=null}"/>
+            </td>
         </tr>
         </tbody>
     </table>

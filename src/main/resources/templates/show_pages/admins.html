@@ -29,8 +29,14 @@
             <th scope="row" th:text="${admin.getId()}"/>
             <td th:text="${admin.getFirstName()}"/>
             <td th:text="${admin.getLastName()}"/>
-            <td th:text="${admin.getEmail()}"/>
-            <td th:text="${admin.getPhone()}"/>
+            <td th:text="${admin.getEmail()}">
+                <span th:if="${admin.getEmail() != null}" th:text="${admin.getEmail()}"/>
+                <span th:text="null"/>
+            </td>
+            <td th:text="${admin.getPhone()}">
+                <span th:if="${admin.getPhone() != null}" th:text="${admin.getPhone()}"/>
+                <span th:text="null"/>
+            </td>
         </tr>
         </tbody>
     </table>
