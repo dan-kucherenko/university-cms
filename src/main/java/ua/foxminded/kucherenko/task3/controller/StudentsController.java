@@ -12,6 +12,7 @@ import ua.foxminded.kucherenko.task3.services.StudentService;
 public class StudentsController {
     @Autowired
     private StudentService studentService;
+
     @GetMapping
     public String students(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
