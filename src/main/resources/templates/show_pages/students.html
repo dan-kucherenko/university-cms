@@ -28,28 +28,28 @@
         </thead>
         <tbody>
         <tr th:each="student : ${students}">
-            <th scope="row" th:text="${student.getStudentId()}"/>
+            <th scope="row" th:text="${student.studentId}"/>
             <td>
-                <span th:if="${student.getGroup() != null}" th:text="${student.getGroup().getGroupName()}"/>
-                <span th:text="null"/>
+                <span th:if="${student.group != null}" th:text="${student.group.groupName}"/>
+                <span/>
             </td>
-            <td th:text="${student.getFirstName()}"/>
-            <td th:text="${student.getLastName()}"/>
+            <td th:text="${student.firstName}"/>
+            <td th:text="${student.lastName}"/>
             <td>
-                <span th:if="${student.getDateOfBirth()!=null}" th:text="${student.getDateOfBirth()}"/>
-                <span th:text="null" th:unless="${student.getDateOfBirth()!=null}"/>
-            </td>
-            <td>
-                <span th:if="${student.getEmail()!=null}" th:text="${student.getEmail()}"/>
-                <span th:text="null" th:unless="${student.getEmail()!=null}"/>
+                <span th:if="${student.dateOfBirth != null}" th:text="${student.dateOfBirth}"/>
+                <span/>
             </td>
             <td>
-                <span th:if="${student.getPhone()!=null}" th:text="${student.getPhone()}"/>
-                <span th:text="null" th:unless="${student.getPhone()!=null}"/>
+                <span th:if="${student.email != null}" th:text="${student.email}"/>
+                <span/>
             </td>
             <td>
-                <span th:if="${student.getYearOfStudy()!=null}" th:text="${student.getYearOfStudy()}"/>
-                <span th:text="null" th:unless="${student.getYearOfStudy()!=null}"/>
+                <span th:if="${student.phone != null}" th:text="${student.phone}"/>
+                <span/>
+            </td>
+            <td>
+                <span th:if="${student.yearOfStudy != null}" th:text="${student.yearOfStudy}"/>
+                <span/>
             </td>
         </tr>
         </tbody>

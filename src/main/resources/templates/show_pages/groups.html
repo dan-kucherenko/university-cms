@@ -24,10 +24,10 @@
         </thead>
         <tbody>
         <tr th:each="group : ${groups}">
-            <th scope="row" th:text="${group.getGroupId()}"/>
-            <td th:text="${group.getGroupName()}"/>
-            <td th:text="${group.getGroupFaculty()}"/>
-            <td th:text="${group.getGroupSpeciality()}"/>
+            <th scope="row" th:text="${group.groupId}"/>
+            <td th:text="${group.groupName}"/>
+            <td th:text="${group.groupFaculty}"/>
+            <td th:text="${group.groupSpeciality}"/>
         </tr>
         </tbody>
     </table>

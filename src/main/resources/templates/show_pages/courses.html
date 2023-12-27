@@ -24,16 +24,15 @@
         </thead>
         <tbody>
         <tr th:each="course : ${courses}">
-            <th scope="row" th:text="${course.getCourseId()}"/>
-            <td th:text="${course.getCourseName()}"/>
-
-            <td th:text="${course.getCourseDescription()}">
-                <span th:if="${course.getCourseDescription()} != null" th:text="${course.getCourseDescription()}"/>
-                <span th:text="null"/>
+            <th scope="row" th:text="${course.courseId}"/>
+            <td th:text="${course.courseName}"/>
+            <td>
+                <span th:if="${course.courseDescription != null}" th:text="${course.courseDescription}"/>
+                <span/>
             </td>
             <td>
-                <span th:if="${course.getDepartment() != null}" th:text="${course.getDepartment().getDepartmentName()}" />
-                <span th:text="null"/>
+                <span th:if="${course.department != null}" th:text="${course.department.departmentName}" />
+                <span/>
             </td>
         </tr>
         </tbody>

@@ -26,16 +26,16 @@
         </thead>
         <tbody>
         <tr th:each="admin : ${admins}">
-            <th scope="row" th:text="${admin.getId()}"/>
-            <td th:text="${admin.getFirstName()}"/>
-            <td th:text="${admin.getLastName()}"/>
-            <td th:text="${admin.getEmail()}">
-                <span th:if="${admin.getEmail() != null}" th:text="${admin.getEmail()}"/>
+            <th scope="row" th:text="${admin.id}"/>
+            <td th:text="${admin.firstName}"/>
+            <td th:text="${admin.lastName}"/>
+            <td>
+                <span th:if="${admin.email != null}" th:text="${admin.email}"/>
                 <span th:text="null"/>
             </td>
-            <td th:text="${admin.getPhone()}">
-                <span th:if="${admin.getPhone() != null}" th:text="${admin.getPhone()}"/>
-                <span th:text="null"/>
+            <td>
+                <span th:if="${admin.phone != null}" th:text="${admin.phone}"/>
+                <span/>
             </td>
         </tr>
         </tbody>
