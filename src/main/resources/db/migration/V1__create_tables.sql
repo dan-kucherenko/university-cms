@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS teachers
     email VARCHAR(25) NOT NULL,
     phone VARCHAR(25) NOT NULL,
     department_id INT REFERENCES departments (department_id),
-    salary DOUBLE
+    salary FLOAT
     );
 
 CREATE TABLE IF NOT EXISTS lessons
@@ -62,8 +62,7 @@ CREATE TABLE IF NOT EXISTS administrators
     last_name VARCHAR(25) NOT NULL,
     email VARCHAR(25) NOT NULL,
     phone VARCHAR(25) NOT NULL
-);
-
+    );
 
 CREATE TABLE IF NOT EXISTS student_courses
 (
@@ -71,5 +70,3 @@ CREATE TABLE IF NOT EXISTS student_courses
     course_id  INT REFERENCES courses (course_id),
     PRIMARY KEY (student_id, course_id)
     );
-
-

@@ -23,6 +23,7 @@ public class Course {
     private String courseName;
     private String courseDescription;
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
     @ManyToMany
     @JoinTable(

@@ -16,6 +16,8 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private int departmentId;
+    @NonNull
     private String departmentName;
+    @NonNull
     private String departmentSphere;
 }

@@ -1,0 +1,16 @@
+body {
+    /*padding-top: 56px; !* Adjust based on your navbar height *!*/
+    font-family: Arial, sans-serif;
+}
+
+.hero-section {
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 150px 20px;
+}
+
+.intro-section {
+    padding: 50px 20px;
+    text-align: center;
+}

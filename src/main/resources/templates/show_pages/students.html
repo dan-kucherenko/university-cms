@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container-md">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Group Name</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Year of Study</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <th scope="row" th:text="${student.studentId}"/>
+            <td>
+                <span th:if="${student.group != null}" th:text="${student.group.groupName}"/>
+                <span/>
+            </td>
+            <td th:text="${student.firstName}"/>
+            <td th:text="${student.lastName}"/>
+            <td>
+                <span th:if="${student.dateOfBirth != null}" th:text="${student.dateOfBirth}"/>
+                <span/>
+            </td>
+            <td>
+                <span th:if="${student.email != null}" th:text="${student.email}"/>
+                <span/>
+            </td>
+            <td>
+                <span th:if="${student.phone != null}" th:text="${student.phone}"/>
+                <span/>
+            </td>
+            <td>
+                <span th:if="${student.yearOfStudy != null}" th:text="${student.yearOfStudy}"/>
+                <span/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li th:if="${pageNo > 0 && pageNo != 1}" class="page-item">
+                <a class="page-link" th:href="@{'/students?page=' + ${pageNo - 1} + '&size=' + ${pageSize}}">Previous</a>
+            </li>
+            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber + 1 == pageNo ? 'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'/students?page=' + ${pageNumber} + '&size=' + ${pageSize}}" th:text="${pageNumber + 1}"></a>
+            </li>
+            <li th:if="${pageNo < totalPages - 1}" class="page-item">
+                <a class="page-link" th:href="@{'/students?page=' + ${pageNo + 1} + '&size=' + ${pageSize}}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

@@ -3,6 +3,9 @@ package ua.foxminded.kucherenko.task3.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Course;
 import ua.foxminded.kucherenko.task3.models.Student;
@@ -10,7 +13,6 @@ import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentCourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,9 +29,10 @@ public class CourseService {
         this.studentCourseRepository = studentCourseRepository;
     }
 
-    public List<Course> getAllCourses() {
+    public Page<Course> getAllCourses(int page, int size) {
         LOGGER.debug("Getting all the courses");
-        return courseRepository.findAll();
+        final Pageable pageable = PageRequest.of(page, size);
+        return courseRepository.findAll(pageable);
     }
 
     public Optional<Course> getCourseById(int courseId) {

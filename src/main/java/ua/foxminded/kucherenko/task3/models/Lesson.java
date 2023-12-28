@@ -18,15 +18,20 @@ public class Lesson {
     @Setter(AccessLevel.NONE)
     private int lessonId;
     @ManyToOne
+    @JoinColumn(name = "group_id")
     private Group group;
+    @NonNull
     private LocalDateTime startTime;
+    @NonNull
     private LocalDateTime endTime;
     private String location;
     @NonNull
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+    @NonNull
     @ManyToOne
+    @JoinColumn(name = "course_id")
     private Course course;
 
     public DayOfWeek getDayOfWeek(){
