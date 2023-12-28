@@ -22,6 +22,10 @@ public class GroupsController {
                          @RequestParam(value = "pageSize", defaultValue = "10") int size) {
         final Page<Group> groupsPage = groupService.getAllGroups(page, size);
         model.addAttribute("groups", groupsPage.getContent());
+        model.addAttribute("pageNo", page + 1);
+        model.addAttribute("totalPages", groupsPage.getTotalPages());
+        model.addAttribute("pageSize", size);
+
         return "show_pages/groups";
     }
 }

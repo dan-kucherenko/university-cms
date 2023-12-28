@@ -22,6 +22,10 @@ public class AdministratorsController {
                          @RequestParam(value = "pageSize", defaultValue = "10") int size) {
         final Page<Administrator> adminsPage = administratorService.getAllAdmins(page, size);
         model.addAttribute("admins", adminsPage.getContent());
+        model.addAttribute("pageNo", page + 1);
+        model.addAttribute("totalPages", adminsPage.getTotalPages());
+        model.addAttribute("pageSize", size);
+
         return "show_pages/admins";
     }
 }

@@ -22,6 +22,10 @@ public class TeachersController {
                            @RequestParam(value = "pageSize", defaultValue = "10") int size) {
         final Page<Teacher> teachersPage = teacherService.getAllTeachers(page, size);
         model.addAttribute("teachers", teachersPage.getContent());
+        model.addAttribute("pageNo", page + 1);
+        model.addAttribute("totalPages", teachersPage.getTotalPages());
+        model.addAttribute("pageSize", size);
+
         return "show_pages/teachers";
     }
 }

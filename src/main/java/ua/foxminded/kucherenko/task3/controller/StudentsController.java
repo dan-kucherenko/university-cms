@@ -22,6 +22,10 @@ public class StudentsController {
                            @RequestParam(value = "pageSize", defaultValue = "10") int size) {
         final Page<Student> studentsPage = studentService.getAllStudents(page, size);
         model.addAttribute("students", studentsPage.getContent());
+        model.addAttribute("pageNo", page + 1);
+        model.addAttribute("totalPages", studentsPage.getTotalPages());
+        model.addAttribute("pageSize", size);
+
         return "show_pages/students";
     }
 }

@@ -13,7 +13,6 @@
 <body>
 <div th:replace="~{fragments :: navbar}"></div>
 <div class="container-md">
-
     <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -40,6 +39,19 @@
         </tr>
         </tbody>
     </table>
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li th:if="${pageNo > 0 && pageNo != 1}" class="page-item">
+                <a class="page-link" th:href="@{'/administrators?page=' + ${pageNo - 1} + '&size=' + ${pageSize}}">Previous</a>
+            </li>
+            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber + 1 == pageNo ? 'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'/administrators?page=' + ${pageNumber} + '&size=' + ${pageSize}}" th:text="${pageNumber + 1}"></a>
+            </li>
+            <li th:if="${pageNo < totalPages - 1}" class="page-item">
+                <a class="page-link" th:href="@{'/administrators?page=' + ${pageNo + 1} + '&size=' + ${pageSize}}">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

@@ -22,6 +22,10 @@ public class LessonsController {
                           @RequestParam(value = "pageSize", defaultValue = "10") int size) {
         final Page<Lesson> lessonsPage = lessonService.getAllLessons(page, size);
         model.addAttribute("lessons", lessonsPage.getContent());
+        model.addAttribute("pageNo", page + 1);
+        model.addAttribute("totalPages", lessonsPage.getTotalPages());
+        model.addAttribute("pageSize", size);
+
         return "show_pages/lessons";
     }
 }

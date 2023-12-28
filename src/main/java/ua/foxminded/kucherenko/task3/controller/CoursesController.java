@@ -22,6 +22,10 @@ public class CoursesController {
                           @RequestParam(value = "pageSize", defaultValue = "10") int size) {
         final Page<Course> coursesPage = courseService.getAllCourses(page, size);
         model.addAttribute("courses", coursesPage.getContent());
+        model.addAttribute("pageNo", page + 1);
+        model.addAttribute("totalPages", coursesPage.getTotalPages());
+        model.addAttribute("pageSize", size);
+
         return "show_pages/courses";
     }
 }
