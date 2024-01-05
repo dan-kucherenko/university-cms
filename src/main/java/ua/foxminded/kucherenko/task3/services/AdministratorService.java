@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Administrator;
+import ua.foxminded.kucherenko.task3.models.Role;
 import ua.foxminded.kucherenko.task3.repositories.AdministratorRepository;
 
 import java.util.Optional;
@@ -58,6 +59,16 @@ public class AdministratorService {
 
         repository.save(existingAdmin);
         LOGGER.debug("Administrator with id {} has been updated", adminId);
+    }
+
+    public void updateAdminRole(int adminId, Role role) {
+        if (adminId < 1) {
+            throw new IllegalArgumentException("Administrator id can't be negative or zero");
+        }
+        Optional<Administrator> foundAdministrator = repository.findById(adminId);
+        foundAdministrator.orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
+        repository.updateAdministratorRoleById(adminId, role);
+        LOGGER.debug("Role for {} {} has been changed", foundAdministrator.get().getFirstName(), foundAdministrator.get().getLastName());
     }
 
     public void deleteAdministrator(int adminId) {

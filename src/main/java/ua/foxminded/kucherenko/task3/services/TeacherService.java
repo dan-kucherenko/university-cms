@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ua.foxminded.kucherenko.task3.models.Role;
 import ua.foxminded.kucherenko.task3.models.Teacher;
 import ua.foxminded.kucherenko.task3.repositories.TeacherRepository;
 
@@ -70,6 +71,15 @@ public class TeacherService {
 
         repository.save(existingTeacher);
         LOGGER.debug("Teacher with ID {} has been updated", teacherId);
+    }
+
+    public void updateTeacherRole(int teacherId, Role role) {
+        if (teacherId < 1) {
+            throw new IllegalArgumentException("Teacher id can't be negative or zero");
+        }
+        Optional<Teacher> foundTeacher = repository.findById(teacherId);
+        foundTeacher.orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
+        repository.updateTeacherRoleById(teacherId, role);
     }
 
     public void deleteTeacher(int teacherId) {
