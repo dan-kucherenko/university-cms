@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <tr th:each="teacher : ${teachers}">
-            <th scope="row" th:text="${teacher.teacherId}"/>
+            <th scope="row" th:text="${teacher.id}"/>
             <td th:text="${teacher.firstName}"/>
             <td th:text="${teacher.lastName}"/>
             <td>

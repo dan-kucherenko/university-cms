@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <tr th:each="student : ${students}">
-            <th scope="row" th:text="${student.studentId}"/>
+            <th scope="row" th:text="${student.id}"/>
             <td>
                 <span th:if="${student.group != null}" th:text="${student.group.groupName}"/>
                 <span/>
