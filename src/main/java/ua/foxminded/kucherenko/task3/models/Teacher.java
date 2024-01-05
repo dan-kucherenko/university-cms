@@ -20,7 +20,7 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
-    private int teacherId;
+    private int id;
     @NonNull
     private String firstName;
     @NonNull
@@ -35,6 +35,8 @@ public class Teacher {
     @JoinColumn(name = "department_id")
     private Department department;
     private Double salary;
+    @ManyToOne
+    private Role role;
 
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();

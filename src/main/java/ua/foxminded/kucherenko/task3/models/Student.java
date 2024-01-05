@@ -18,12 +18,11 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
-@EqualsAndHashCode
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
-    private Integer studentId;
+    private int id;
     @OneToOne
     @JoinColumn(name = "group_id")
     private Group group;
@@ -37,6 +36,8 @@ public class Student {
     private Integer yearOfStudy;
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
+    @ManyToOne
+    private Role role;
 
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();

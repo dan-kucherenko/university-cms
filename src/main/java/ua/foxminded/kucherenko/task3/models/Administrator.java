@@ -21,4 +21,6 @@ public class Administrator {
     private String lastName;
     private String email;
     private String phone;
+    @ManyToOne
+    private Role role;
 }
