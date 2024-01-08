@@ -10,8 +10,4 @@ import ua.foxminded.kucherenko.task3.models.Role;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
-    @Modifying
-    @Transactional
-    @Query("UPDATE Administrator a SET a.role = :role WHERE a.id = :id")
-    void updateAdministratorRoleById(int id, Role role);
 }

@@ -73,15 +73,6 @@ public class TeacherService {
         LOGGER.debug("Teacher with ID {} has been updated", teacherId);
     }
 
-    public void updateTeacherRole(int teacherId, Role role) {
-        if (teacherId < 1) {
-            throw new IllegalArgumentException("Teacher id can't be negative or zero");
-        }
-        Optional<Teacher> foundTeacher = repository.findById(teacherId);
-        foundTeacher.orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
-        repository.updateTeacherRoleById(teacherId, role);
-    }
-
     public void deleteTeacher(int teacherId) {
         if (teacherId < 1) {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");

@@ -61,16 +61,6 @@ public class AdministratorService {
         LOGGER.debug("Administrator with id {} has been updated", adminId);
     }
 
-    public void updateAdminRole(int adminId, Role role) {
-        if (adminId < 1) {
-            throw new IllegalArgumentException("Administrator id can't be negative or zero");
-        }
-        Optional<Administrator> foundAdministrator = repository.findById(adminId);
-        foundAdministrator.orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
-        repository.updateAdministratorRoleById(adminId, role);
-        LOGGER.debug("Role for {} {} has been changed", foundAdministrator.get().getFirstName(), foundAdministrator.get().getLastName());
-    }
-
     public void deleteAdministrator(int adminId) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");

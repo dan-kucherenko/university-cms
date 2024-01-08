@@ -25,9 +25,4 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     @Query("SELECT s.id FROM Student s")
     List<Integer> getAllStudentIds();
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE Student s SET s.role = :role WHERE s.id = :id")
-    void updateStudentRoleById(int id, Role role);
 }

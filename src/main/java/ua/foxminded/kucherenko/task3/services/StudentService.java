@@ -87,15 +87,6 @@ public class StudentService {
         LOGGER.debug("Student with ID {} has been updated", studentId);
     }
 
-    public void updateStudentRole(int studentId, Role role) {
-        if (studentId < 1) {
-            throw new IllegalArgumentException("Student id can't be negative or zero");
-        }
-        Optional<Student> foundStudent = studentRepository.findById(studentId);
-        foundStudent.orElseThrow(() -> new IllegalArgumentException("Student with the given id doesn't exist"));
-        studentRepository.updateStudentRoleById(studentId, role);
-    }
-
     public void deleteStudent(int studentId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
