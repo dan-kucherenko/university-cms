@@ -36,8 +36,6 @@ public class Student {
     private Integer yearOfStudy;
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
-    @ManyToOne
-    private Role role;
 
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();

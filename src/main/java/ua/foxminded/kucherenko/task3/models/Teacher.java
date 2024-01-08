@@ -35,8 +35,6 @@ public class Teacher {
     @JoinColumn(name = "department_id")
     private Department department;
     private Double salary;
-    @ManyToOne
-    private Role role;
 
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
