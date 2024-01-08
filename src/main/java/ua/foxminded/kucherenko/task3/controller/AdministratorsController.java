@@ -6,22 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.foxminded.kucherenko.task3.models.Administrator;
-import ua.foxminded.kucherenko.task3.models.Student;
-import ua.foxminded.kucherenko.task3.models.Teacher;
-import ua.foxminded.kucherenko.task3.services.AdministratorService;
-import ua.foxminded.kucherenko.task3.services.RoleService;
-import ua.foxminded.kucherenko.task3.services.StudentService;
-import ua.foxminded.kucherenko.task3.services.TeacherService;
+import ua.foxminded.kucherenko.task3.models.UserEntity;
+import ua.foxminded.kucherenko.task3.services.*;
 
 @Controller
 @RequestMapping("/administrators")
 public class AdministratorsController {
     @Autowired
+    private UserService userService;
+    @Autowired
     private AdministratorService administratorService;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private TeacherService teacherService;
     @Autowired
     private RoleService roleService;
 
@@ -43,17 +37,13 @@ public class AdministratorsController {
     public String manageRoles(Model model,
                               @RequestParam(value = "page", defaultValue = "0") int page,
                               @RequestParam(value = "pageSize", defaultValue = "10") int size) {
-        final Page<Student> studentPage = studentService.getAllStudents(page, size);
-        final Page<Administrator> administratorPage = administratorService.getAllAdmins(page, size);
-        final Page<Teacher> teacherPage = teacherService.getAllTeachers(page, size);
+        final Page<UserEntity> userEntityPage = userService.getAllUsers(page, size);
 
-        model.addAttribute("admins", administratorPage.getContent());
-        model.addAttribute("teachers", teacherPage.getContent());
-        model.addAttribute("students", studentPage.getContent());
+        model.addAttribute("users", userEntityPage.getContent());
         model.addAttribute("roles", roleService.getAllRoles());
 
         model.addAttribute("pageNo", page + 1);
-        model.addAttribute("totalPages", studentPage.getTotalPages());
+        model.addAttribute("totalPages", userEntityPage.getTotalPages());
         model.addAttribute("pageSize", size);
 
         return "admin/manage_roles";

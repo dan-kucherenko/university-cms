@@ -21,136 +21,39 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
-            <th scope="col">Phone</th>
             <th scope="col">Role</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="admin : ${admins}">
-            <th scope="row" th:text="${admin.id}"/>
-            <td th:text="${admin.firstName}"/>
-            <td th:text="${admin.lastName}"/>
+        <tr th:each="user : ${users}">
+            <th scope="row" th:text="${user.id}"/>
+            <td th:text="${user.firstName}"/>
+            <td th:text="${user.lastName}"/>
             <td>
-                <span th:if="${admin.email != null}" th:text="${admin.email}"/>
+                <span th:if="${user.email != null}" th:text="${user.email}"/>
                 <span/>
             </td>
             <td>
-                <span th:if="${admin.phone != null}" th:text="${admin.phone}"/>
-                <span/>
-            </td>
-            <td>
-                <select class="form-select" aria-label="Default select example" id="adminRoleSelector"
-                        th:data-admin-id="${admin.id}"
-                        onchange="updateAdminRole(this)">
+                <select class="form-select" aria-label="Default select example" id="userRoleSelector"
+                        th:data-user-id="${user.id}"
+                        onchange="updateUserRole(this)">
                     <option value="" disabled selected>Select a role</option>
                     <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"
-                            th:selected="${admin.role != null && admin.role.id eq role.id}"></option>
+                            th:selected="${user.role != null && user.role.id eq role.id}"></option>
                 </select>
             </td>
             <script th:inline="javascript">
-                function updateAdminRole(selectElement) {
-                    const adminId = selectElement.getAttribute('data-admin-id');
-                    const selectedRoleId = $('#adminRoleSelector').val();
+                function updateUserRole (selectElement) {
+                    const userId = selectElement.getAttribute('data-user-id');
+                    const selectedRoleId = $('#userRoleSelector').val();
 
                     const requestData = {
-                        id: adminId,
+                        id: userId,
                         roleId: selectedRoleId
                     };
 
                     $.ajax({
-                        url: '/administrators/update-role',
-                        type: 'PATCH',
-                        contentType: 'application/json',
-                        data: JSON.stringify(requestData),
-                        success: function (data) {
-                            console.log('Update successful:', data);
-                        },
-                        error: function (error) {
-                            console.error('Error during update:', error);
-                        }
-                    });
-                }
-            </script>
-        </tr>
-        <tr th:each="teacher : ${teachers}">
-            <th scope="row" th:text="${teacher.id}"/>
-            <td th:text="${teacher.firstName}"/>
-            <td th:text="${teacher.lastName}"/>
-            <td>
-                <span th:if="${teacher.email != null}" th:text="${teacher.email}"/>
-                <span/>
-            </td>
-            <td>
-                <span th:if="${teacher.phone != null}" th:text="${teacher.phone}"/>
-                <span/>
-            </td>
-            <td>
-                <select class="form-select" aria-label="Default select example"
-                        th:id="teacherRoleSelector" th:data-teacher-id="${teacher.id}"
-                        onchange="updateTeacherRole(this)">
-                    <option value="" disabled selected>Select a role</option>
-                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"
-                            th:selected="${teacher.role != null && teacher.role.id eq role.id}"></option>
-                </select>
-            </td>
-            <script th:inline="javascript">
-                function updateTeacherRole(selectElement) {
-                    const teacherId = selectElement.getAttribute('data-teacher-id');
-                    const selectedRoleId = $('#teacherRoleSelector').val();
-
-                    const requestData = {
-                        id: teacherId,
-                        roleId: selectedRoleId
-                    };
-
-                    $.ajax({
-                        url: '/teachers/update-role',
-                        type: 'PATCH',
-                        contentType: 'application/json',
-                        data: JSON.stringify(requestData),
-                        success: function (data) {
-                            console.log('Update successful:', data);
-                        },
-                        error: function (error) {
-                            console.error('Error during update:', error);
-                        }
-                    });
-                }
-            </script>
-        </tr>
-        <tr th:each="student : ${students}">
-            <th scope="row" th:text="${student.id}"/>
-            <td th:text="${student.firstName}"/>
-            <td th:text="${student.lastName}"/>
-            <td>
-                <span th:if="${student.email != null}" th:text="${student.email}"/>
-                <span/>
-            </td>
-            <td>
-                <span th:if="${student.phone != null}" th:text="${student.phone}"/>
-                <span/>
-            </td>
-            <td>
-                <select class="form-select" aria-label="Default select example" id="studentRoleSelector"
-                        th:data-student-id="${student.id}"
-                        onchange="updateStudentRole(this)">
-                    <option value="" disabled selected>Select a role</option>
-                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"
-                            th:selected="${student.role != null && student.role.id eq role.id}"></option>
-                </select>
-            </td>
-            <script th:inline="javascript">
-                function updateStudentRole(selectElement) {
-                    const studentId = selectElement.getAttribute('data-student-id');
-                    const selectedRoleId = $('#studentRoleSelector').val();
-
-                    const requestData = {
-                        id: studentId,
-                        roleId: selectedRoleId
-                    };
-
-                    $.ajax({
-                        url: '/students/update-role',
+                        url: '/users/update-role',
                         type: 'PATCH',
                         contentType: 'application/json',
                         data: JSON.stringify(requestData),
@@ -170,15 +73,15 @@
         <ul class="pagination justify-content-center">
             <li th:if="${pageNo > 0 && pageNo != 1}" class="page-item">
                 <a class="page-link"
-                   th:href="@{'/students?page=' + ${pageNo - 1} + '&size=' + ${pageSize}}">Previous</a>
+                   th:href="@{'/administrators/manage-roles?page=' + ${pageNo - 2} + '&size=' + ${pageSize}}">Previous</a>
             </li>
             <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
                 th:class="${pageNumber + 1 == pageNo ? 'page-item active' : 'page-item'}">
-                <a class="page-link" th:href="@{'/students?page=' + ${pageNumber} + '&size=' + ${pageSize}}"
+                <a class="page-link" th:href="@{'/administrators/manage-roles?page=' + ${pageNumber} + '&size=' + ${pageSize}}"
                    th:text="${pageNumber + 1}"></a>
             </li>
             <li th:if="${pageNo < totalPages - 1}" class="page-item">
-                <a class="page-link" th:href="@{'/students?page=' + ${pageNo + 1} + '&size=' + ${pageSize}}">Next</a>
+                <a class="page-link" th:href="@{'/administrators/manage-roles?page=' + ${pageNo + 1} + '&size=' + ${pageSize}}">Next</a>
             </li>
         </ul>
     </nav>
