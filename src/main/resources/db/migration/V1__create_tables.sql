@@ -24,24 +24,24 @@ CREATE TABLE IF NOT EXISTS students
 (
     student_id SERIAL PRIMARY KEY,
     "group"  INT REFERENCES groups (group_id),
+    date_of_birth DATE,
+    year_of_study INT,
     first_name VARCHAR(25) NOT NULL,
     last_name  VARCHAR(25) NOT NULL,
-    date_of_birth DATE,
-    email VARCHAR(25),
-    phone VARCHAR(25),
-    year_of_study INT
+    email VARCHAR(25) NOT NULL,
+    phone VARCHAR(25) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS teachers
 (
     teacher_id SERIAL PRIMARY KEY,
+    date_of_birth DATE,
+    department_id INT REFERENCES departments (department_id),
+    salary FLOAT,
     firstName VARCHAR(25) NOT NULL,
     lastName VARCHAR(25) NOT NULL,
-    date_of_birth DATE,
     email VARCHAR(25) NOT NULL,
-    phone VARCHAR(25) NOT NULL,
-    department_id INT REFERENCES departments (department_id),
-    salary FLOAT
+    phone VARCHAR(25) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS lessons
