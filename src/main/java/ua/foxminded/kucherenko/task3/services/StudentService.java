@@ -95,6 +95,13 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
+    public void deleteStudentByUserId(long userId) {
+        if (userId < 1) {
+            throw new IllegalArgumentException("Administrator id can't be negative or zero");
+        }
+        studentRepository.deleteStudentByUserId(userId);
+    }
+
     public boolean exists(long studentId, int courseId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id cant be negative or less than zero");

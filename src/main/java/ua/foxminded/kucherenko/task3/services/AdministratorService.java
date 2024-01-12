@@ -28,7 +28,7 @@ public class AdministratorService {
         return repository.findAll(pageable);
     }
 
-    public Optional<Administrator> getAdministratorsById (long adminId) {
+    public Optional<Administrator> getAdministratorsById(long adminId) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Admin id can't be negative or zero");
         }
@@ -65,5 +65,12 @@ public class AdministratorService {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }
         repository.deleteById(adminId);
+    }
+
+    public void deleteAdministratorByUserId(long userId) {
+        if (userId < 1) {
+            throw new IllegalArgumentException("Administrator id can't be negative or zero");
+        }
+        repository.deleteAdministratorByUserId(userId);
     }
 }

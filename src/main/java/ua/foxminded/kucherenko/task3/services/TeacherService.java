@@ -79,4 +79,11 @@ public class TeacherService {
         }
         repository.deleteById(teacherId);
     }
+
+    public void deleteTeacherByUserId(long userId) {
+        if (userId < 1) {
+            throw new IllegalArgumentException("Administrator id can't be negative or zero");
+        }
+        repository.deleteTeacherByUserId(userId);
+    }
 }

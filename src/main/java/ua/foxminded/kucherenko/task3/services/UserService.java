@@ -49,6 +49,7 @@ public class UserService {
             deleteUserFromPrevRoleTable(foundUserRoleName, userId);
         }
         userRepository.updateUserRoleById(userId, role);
+        foundUser.get().setRole(role);
         final String newUserRoleName = role.getName();
         addUserToNewRoleTable(newUserRoleName, foundUser);
     }
@@ -73,9 +74,9 @@ public class UserService {
 
     private void deleteUserFromPrevRoleTable(String foundUserRoleName, long userId) {
         switch (foundUserRoleName) {
-            case "admin", "superadmin" -> administratorService.deleteAdministrator(userId);
-            case "student" -> studentService.deleteStudent(userId);
-            case "teacher" -> teacherService.deleteTeacher(userId);
+            case "admin", "superadmin" -> administratorService.deleteAdministratorByUserId(userId);
+            case "student" -> studentService.deleteStudentByUserId(userId);
+            case "teacher" -> teacherService.deleteTeacherByUserId(userId);
             default -> LOGGER.debug("Error deleting user in other tables");
         }
     }

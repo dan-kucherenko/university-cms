@@ -7,10 +7,15 @@ import lombok.*;
 @Table(name = "administrators")
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 @ToString
 public class Administrator extends UserEntity {
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     public Administrator(UserEntity user) {
+        this.setUser(user);
         this.setUsername(user.getUsername());
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());

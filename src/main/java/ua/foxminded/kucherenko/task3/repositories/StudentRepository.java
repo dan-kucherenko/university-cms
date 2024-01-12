@@ -1,6 +1,8 @@
 package ua.foxminded.kucherenko.task3.repositories;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.kucherenko.task3.models.Student;
@@ -22,4 +24,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query("SELECT s.id FROM Student s")
     List<Integer> getAllStudentIds();
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Student s WHERE s.user.id = :userId")
+    void deleteStudentByUserId(long userId);
 }

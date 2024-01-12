@@ -17,6 +17,9 @@ import java.util.Set;
 @ToString
 public class Student extends UserEntity {
     @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+    @OneToOne
     @JoinColumn(name = "group_id")
     private Group group;
     private LocalDate dateOfBirth;
@@ -31,6 +34,7 @@ public class Student extends UserEntity {
     private Set<Course> courses = new HashSet<>();
 
     public Student(UserEntity user) {
+        this.setUser(user);
         this.setUsername(user.getUsername());
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
