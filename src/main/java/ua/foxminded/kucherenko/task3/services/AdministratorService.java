@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Administrator;
-import ua.foxminded.kucherenko.task3.models.Role;
 import ua.foxminded.kucherenko.task3.repositories.AdministratorRepository;
 
 import java.util.Optional;
@@ -29,7 +28,7 @@ public class AdministratorService {
         return repository.findAll(pageable);
     }
 
-    public Optional<Administrator> getAdministratorsById (int adminId) {
+    public Optional<Administrator> getAdministratorsById (long adminId) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Admin id can't be negative or zero");
         }
@@ -43,7 +42,7 @@ public class AdministratorService {
         return repository.save(admin);
     }
 
-    public void updateAdminData(int adminId, Administrator admin) {
+    public void updateAdminData(long adminId, Administrator admin) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }
@@ -61,7 +60,7 @@ public class AdministratorService {
         LOGGER.debug("Administrator with id {} has been updated", adminId);
     }
 
-    public void deleteAdministrator(int adminId) {
+    public void deleteAdministrator(long adminId) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }

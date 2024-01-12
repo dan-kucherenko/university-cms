@@ -1,46 +1,43 @@
 package ua.foxminded.kucherenko.task3.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 
 @Entity
 @Table(name = "teachers")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
 @ToString
-public class Teacher {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
-    private int id;
-    @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
+public class Teacher extends UserEntity {
     private LocalDate dateOfBirth;
-    @NonNull
-    private String email;
-    @NonNull
-    private String phone;
-    @NonNull
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
     private Double salary;
+
+    public Teacher(UserEntity user) {
+        this.setUsername(user.getUsername());
+        this.setFirstName(user.getFirstName());
+        this.setLastName(user.getLastName());
+        this.setEmail(user.getEmail());
+        this.setPhone(user.getPhone());
+        this.setRole(user.getRole());
+    }
 
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
 
     public String getInitials() {
-        return lastName + ' ' + firstName.charAt(0) + '.';
+        return super.getLastName() + ' ' + super.getFirstName().charAt(0) + '.';
     }
 }
+
+

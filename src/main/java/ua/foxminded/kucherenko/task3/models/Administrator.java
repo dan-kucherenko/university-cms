@@ -8,17 +8,14 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class Administrator {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private int id;
-    @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
-    private String email;
-    private String phone;
+@ToString
+public class Administrator extends UserEntity {
+    public Administrator(UserEntity user) {
+        this.setUsername(user.getUsername());
+        this.setFirstName(user.getFirstName());
+        this.setLastName(user.getLastName());
+        this.setEmail(user.getEmail());
+        this.setPhone(user.getPhone());
+        this.setRole(user.getRole());
+    }
 }

@@ -98,7 +98,7 @@ public class CourseService {
         Optional<Student> foundStudent = studentRepository.findById(student.getId());
         foundStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
 
-        Integer studentId = foundStudent.get().getId();
+        Long studentId = foundStudent.get().getId();
         if (!studentCourseRepository.exists(studentId, course.getCourseId())) {
             throw new IllegalArgumentException("This record doesn't exist");
         }

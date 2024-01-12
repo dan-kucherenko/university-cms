@@ -9,9 +9,7 @@ import org.springframework.data.domain.Pageable;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.dto.RegUserDto;
-import ua.foxminded.kucherenko.task3.models.Role;
-import ua.foxminded.kucherenko.task3.models.UserEntity;
-import ua.foxminded.kucherenko.task3.repositories.RoleRepository;
+import ua.foxminded.kucherenko.task3.models.*;
 import ua.foxminded.kucherenko.task3.repositories.UserRepository;
 
 import java.util.Optional;
@@ -23,7 +21,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RoleRepository roleRepository;
+    private AdministratorService administratorService;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private RoleService roleService;
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
@@ -33,21 +37,28 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public void updateUserRole(int userId, Role role){
+    public void updateUserRole(long userId, Role role) {
         if (userId < 1) {
             throw new IllegalArgumentException("User id can't be negative or zero");
         }
         Optional<UserEntity> foundUser = userRepository.findById(userId);
-        foundUser.orElseThrow(()-> new IllegalArgumentException("User with the given id doesn't exist"));
+        foundUser.orElseThrow(() -> new IllegalArgumentException("User with the given id doesn't exist"));
+        final Role prevRole = foundUser.get().getRole();
+        if (prevRole != null) {
+            final String foundUserRoleName = prevRole.getName();
+            deleteUserFromPrevRoleTable(foundUserRoleName, userId);
+        }
         userRepository.updateUserRoleById(userId, role);
+        final String newUserRoleName = role.getName();
+        addUserToNewRoleTable(newUserRoleName, foundUser);
     }
 
     public void saveUser(RegUserDto registrationDto) {
         UserEntity user = new UserEntity();
         user.setUsername(registrationDto.getUsername());
         user.setEmail(registrationDto.getEmail());
-//        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
-        Role role = roleRepository.getRoleByName("USER");
+//        user.setPassword(passwordEncoder.encode(regixstrationDto.getPassword()));
+        Role role = roleService.getRoleByName("USER");
         user.setRole(role);
         userRepository.save(user);
     }
@@ -58,5 +69,24 @@ public class UserService {
 
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    private void deleteUserFromPrevRoleTable(String foundUserRoleName, long userId) {
+        switch (foundUserRoleName) {
+            case "admin", "superadmin" -> administratorService.deleteAdministrator(userId);
+            case "student" -> studentService.deleteStudent(userId);
+            case "teacher" -> teacherService.deleteTeacher(userId);
+            default -> LOGGER.debug("Error deleting user in other tables");
+        }
+    }
+
+    private void addUserToNewRoleTable(String newUserRoleName, Optional<UserEntity> foundUser) {
+        UserEntity user = foundUser.get();
+        switch (newUserRoleName) {
+            case "admin", "superadmin" -> administratorService.saveAdministrator(new Administrator(user));
+            case "student" -> studentService.saveStudent(new Student(user));
+            case "teacher" -> teacherService.saveTeacher(new Teacher(user));
+            default -> LOGGER.debug("Error deleting user in other tables");
+        }
     }
 }

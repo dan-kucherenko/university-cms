@@ -12,13 +12,13 @@ public interface StudentCourseRepository extends JpaRepository<Student, Integer>
     int countCourseByStudentId(int studentId);
 
     @Query(value = "SELECT COUNT(*) > 0 FROM student_courses WHERE student_id = :studentId AND course_id = :courseId", nativeQuery = true)
-    boolean exists(int studentId, int courseId);
+    boolean exists(long studentId, int courseId);
 
     @Modifying
     @Query(value = "INSERT INTO student_courses (student_id, course_id) VALUES (:studentId, :courseId)", nativeQuery = true)
-    void addStudentToCourse(Integer studentId, Integer courseId);
+    void addStudentToCourse(long studentId, Integer courseId);
 
     @Modifying
     @Query(value = "DELETE FROM student_courses WHERE student_id = :studentId AND course_id = :courseId", nativeQuery = true)
-    void removeStudentFromCourse(Integer studentId, Integer courseId);
+    void removeStudentFromCourse(long studentId, Integer courseId);
 }

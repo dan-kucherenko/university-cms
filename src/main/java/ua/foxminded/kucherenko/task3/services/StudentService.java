@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ua.foxminded.kucherenko.task3.models.Role;
 import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.StudentCourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
@@ -34,7 +33,7 @@ public class StudentService {
         return studentRepository.findAll(pageable);
     }
 
-    public Optional<Student> getStudentById(int studentId) {
+    public Optional<Student> getStudentById(long studentId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
@@ -59,7 +58,7 @@ public class StudentService {
     }
 
     public Student saveStudent(Student student) {
-        if (student.getYearOfStudy() < 0) {
+        if (student.getYearOfStudy() != null && student.getYearOfStudy() < 0) {
             throw new IllegalArgumentException("Student can't have negative year of study");
         }
 
@@ -67,7 +66,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public void updateStudent(int studentId, Student updatedStudent) {
+    public void updateStudent(long studentId, Student updatedStudent) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
@@ -87,7 +86,7 @@ public class StudentService {
         LOGGER.debug("Student with ID {} has been updated", studentId);
     }
 
-    public void deleteStudent(int studentId) {
+    public void deleteStudent(long studentId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
@@ -96,7 +95,7 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
-    public boolean exists(int studentId, int courseId) {
+    public boolean exists(long studentId, int courseId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id cant be negative or less than zero");
         } else if (courseId < 1) {

@@ -30,7 +30,7 @@ public class TeacherService {
         return repository.findAll(pageable);
     }
 
-    public Optional<Teacher> getTeacherById(int teacherId) {
+    public Optional<Teacher> getTeacherById(long teacherId) {
         if (teacherId < 1) {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");
         }
@@ -52,7 +52,7 @@ public class TeacherService {
         return repository.save(teacher);
     }
 
-    public void updateTeacher(int teacherId, Teacher updatedTeacher) {
+    public void updateTeacher(long teacherId, Teacher updatedTeacher) {
         if (teacherId < 1) {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");
         }
@@ -73,7 +73,7 @@ public class TeacherService {
         LOGGER.debug("Teacher with ID {} has been updated", teacherId);
     }
 
-    public void deleteTeacher(int teacherId) {
+    public void deleteTeacher(long teacherId) {
         if (teacherId < 1) {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");
         }

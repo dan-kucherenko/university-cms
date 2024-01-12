@@ -9,12 +9,12 @@ import ua.foxminded.kucherenko.task3.models.Role;
 import ua.foxminded.kucherenko.task3.models.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
     UserEntity findByEmail(String email);
     UserEntity findByUsername(String userName);
     UserEntity findFirstByUsername(String username);
     @Modifying
     @Transactional
     @Query("UPDATE UserEntity u  SET u.role = :role WHERE u.id = :id")
-    void updateUserRoleById(int id, Role role);
+    void updateUserRoleById(Long id, Role role);
 }

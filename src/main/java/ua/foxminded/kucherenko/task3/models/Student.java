@@ -5,8 +5,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,28 +12,32 @@ import java.util.Set;
 @Table(name = "students")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
-    private int id;
+public class Student extends UserEntity {
     @OneToOne
     @JoinColumn(name = "group_id")
     private Group group;
-    @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
     private LocalDate dateOfBirth;
-    private String email;
-    private String phone;
     private Integer yearOfStudy;
-    @ManyToMany(mappedBy = "students")
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
     private Set<Course> courses = new HashSet<>();
+
+    public Student(UserEntity user) {
+        this.setUsername(user.getUsername());
+        this.setFirstName(user.getFirstName());
+        this.setLastName(user.getLastName());
+        this.setEmail(user.getEmail());
+        this.setPhone(user.getPhone());
+        this.setRole(user.getRole());
+    }
 
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
