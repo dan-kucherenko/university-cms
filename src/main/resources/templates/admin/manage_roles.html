@@ -45,7 +45,7 @@
             <script th:inline="javascript">
                 function updateUserRole (selectElement) {
                     const userId = selectElement.getAttribute('data-user-id');
-                    const selectedRoleId = $('#userRoleSelector').val();
+                    const selectedRoleId = selectElement.options[selectElement.selectedIndex].value;
 
                     const requestData = {
                         id: userId,
