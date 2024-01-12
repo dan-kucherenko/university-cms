@@ -7,4 +7,5 @@ import ua.foxminded.kucherenko.task3.models.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
     Role getRoleById(int id);
+    Role getRoleByName(String name);
 }
