@@ -71,9 +71,10 @@ public class UserService {
 
     private void deleteUserFromPrevRoleTable(String foundUserRoleName, long userId) {
         switch (foundUserRoleName) {
-            case "admin", "superadmin" -> administratorService.deleteAdministratorByUserId(userId);
-            case "student" -> studentService.deleteStudentByUserId(userId);
-            case "teacher" -> teacherService.deleteTeacherByUserId(userId);
+            case "ADMIN", "SUPERADMIN" -> administratorService.deleteAdministratorByUserId(userId);
+            case "STUDENT" -> studentService.deleteStudentByUserId(userId);
+            case "TEACHER" -> teacherService.deleteTeacherByUserId(userId);
+            case "USER" -> {}
             default -> LOGGER.debug("Error deleting user in other tables");
         }
     }
@@ -81,9 +82,9 @@ public class UserService {
     private void addUserToNewRoleTable(String newUserRoleName, Optional<UserEntity> foundUser) {
         UserEntity user = foundUser.get();
         switch (newUserRoleName) {
-            case "admin", "superadmin" -> administratorService.saveAdministrator(new Administrator(user));
-            case "student" -> studentService.saveStudent(new Student(user));
-            case "teacher" -> teacherService.saveTeacher(new Teacher(user));
+            case "ADMIN", "SUPERADMIN" -> administratorService.saveAdministrator(new Administrator(user));
+            case "STUDENT" -> studentService.saveStudent(new Student(user));
+            case "TEACHER" -> teacherService.saveTeacher(new Teacher(user));
             default -> LOGGER.debug("Error deleting user in other tables");
         }
     }
