@@ -22,26 +22,26 @@ CREATE TABLE IF NOT EXISTS departments
 
 CREATE TABLE IF NOT EXISTS students
 (
-    student_id SERIAL PRIMARY KEY,
+    student_id INT PRIMARY KEY,
     "group"  INT REFERENCES groups (group_id),
     date_of_birth DATE,
     year_of_study INT,
-    first_name VARCHAR(25) NOT NULL,
-    last_name  VARCHAR(25) NOT NULL,
-    email VARCHAR(25) NOT NULL,
-    phone VARCHAR(25) NOT NULL
+    first_name VARCHAR(25),
+    last_name  VARCHAR(25),
+    email VARCHAR(50) NOT NULL,
+    phone VARCHAR(50) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS teachers
 (
-    teacher_id SERIAL PRIMARY KEY,
+    teacher_id INT PRIMARY KEY,
     date_of_birth DATE,
     department_id INT REFERENCES departments (department_id),
     salary FLOAT,
-    firstName VARCHAR(25) NOT NULL,
-    lastName VARCHAR(25) NOT NULL,
-    email VARCHAR(25) NOT NULL,
-    phone VARCHAR(25) NOT NULL
+    firstName VARCHAR(25),
+    lastName VARCHAR(25),
+    email VARCHAR(50) NOT NULL,
+    phone VARCHAR(50) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS lessons
@@ -57,11 +57,11 @@ CREATE TABLE IF NOT EXISTS lessons
 
 CREATE TABLE IF NOT EXISTS administrators
 (
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(25) NOT NULL,
-    last_name VARCHAR(25) NOT NULL,
-    email VARCHAR(25) NOT NULL,
-    phone VARCHAR(25) NOT NULL
+    id INT PRIMARY KEY,
+    first_name VARCHAR(25),
+    last_name VARCHAR(25),
+    email VARCHAR(50) NOT NULL,
+    phone VARCHAR(50) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS student_courses

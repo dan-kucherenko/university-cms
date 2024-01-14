@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users
     last_name  VARCHAR(25),
     email      VARCHAR(50) NOT NULL,
     phone      VARCHAR(25) NOT NULL,
-    password   VARCHAR(50) NOT NULL,
+    password   TEXT NOT NULL,
     role_id    INT REFERENCES roles (id)
 );
 
