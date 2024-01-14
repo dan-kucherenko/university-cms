@@ -37,9 +37,14 @@ public class AdministratorService {
         return repository.findById(adminId);
     }
 
-    public Administrator saveAdministrator(Administrator admin) {
+    public void saveAdministrator(Administrator admin) {
         LOGGER.debug("Saving the administrator");
-        return repository.save(admin);
+        saveAdministratorFromUserHlpr(admin);
+    }
+
+    private void saveAdministratorFromUserHlpr(Administrator admin) {
+        repository.saveAdministratorFromUser(admin.getId(), admin.getUsername(), admin.getFirstName(),
+                admin.getLastName(), admin.getEmail(), admin.getPhone(), admin.getRole().getId(), admin.getPassword());
     }
 
     public void updateAdminData(long adminId, Administrator admin) {

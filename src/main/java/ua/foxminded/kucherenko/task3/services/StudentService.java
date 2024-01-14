@@ -57,13 +57,18 @@ public class StudentService {
         return studentRepository.getIdByName(firstName, lastName);
     }
 
-    public Student saveStudent(Student student) {
+    public void saveStudent(Student student) {
         if (student.getYearOfStudy() != null && student.getYearOfStudy() < 0) {
             throw new IllegalArgumentException("Student can't have negative year of study");
         }
 
-        LOGGER.debug("New student has been saved");
-        return studentRepository.save(student);
+        LOGGER.debug("Saving the student");
+        saveStudentFromUserHlpr(student);
+    }
+
+    private void saveStudentFromUserHlpr(Student student) {
+        studentRepository.saveStudentFromUser(student.getId(), student.getUsername(), student.getFirstName(),
+                student.getLastName(), student.getEmail(), student.getPhone(), student.getRole().getId(), student.getPassword());
     }
 
     public void updateStudent(long studentId, Student updatedStudent) {

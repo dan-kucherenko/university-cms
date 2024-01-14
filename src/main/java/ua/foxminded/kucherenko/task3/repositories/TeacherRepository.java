@@ -13,8 +13,18 @@ import java.util.List;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     List<Teacher> getTeachersByDepartmentDepartmentId(int departmentId);
+
     @Modifying
     @Transactional
-    @Query("DELETE FROM Teacher t WHERE t.user.id = :userId")
-    void deleteTeacherByUserId(long userId);
+    @Query(nativeQuery = true, value = """
+            INSERT INTO teachers (id, username, first_name, last_name, email, phone, role_id, password)
+            VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+            """)
+    void saveTeacherFromUser(Long id, String username, String firstName, String lastName,
+                             String email, String phone, int role, String password);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Teacher t WHERE t.id = :id")
+    void deleteTeacherByUserId(long id);
 }

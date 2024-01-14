@@ -17,13 +17,10 @@ public class UserEntity {
     private Long id;
     @NonNull
     private String username;
-    @NonNull
     private String firstName;
-    @NonNull
     private String lastName;
     @NonNull
     private String email;
-    @Transient
     @NonNull
     private String password;
     @NonNull

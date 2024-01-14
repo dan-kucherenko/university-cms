@@ -14,10 +14,6 @@ import java.time.Period;
 @RequiredArgsConstructor
 @ToString
 public class Teacher extends UserEntity {
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
     private LocalDate dateOfBirth;
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -25,13 +21,14 @@ public class Teacher extends UserEntity {
     private Double salary;
 
     public Teacher(UserEntity user) {
-        this.setUser(user);
+        this.setId(user.getId());
         this.setUsername(user.getUsername());
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
         this.setEmail(user.getEmail());
         this.setPhone(user.getPhone());
         this.setRole(user.getRole());
+        this.setPassword(user.getPassword());
     }
 
     public int getAge() {

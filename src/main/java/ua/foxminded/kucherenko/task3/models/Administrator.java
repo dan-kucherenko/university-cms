@@ -10,17 +10,14 @@ import lombok.*;
 @RequiredArgsConstructor
 @ToString
 public class Administrator extends UserEntity {
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
     public Administrator(UserEntity user) {
-        this.setUser(user);
+        this.setId(user.getId());
         this.setUsername(user.getUsername());
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
         this.setEmail(user.getEmail());
         this.setPhone(user.getPhone());
         this.setRole(user.getRole());
+        this.setPassword(user.getPassword());
     }
 }

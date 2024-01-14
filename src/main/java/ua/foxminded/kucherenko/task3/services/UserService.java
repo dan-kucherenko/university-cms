@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.dto.RegUserDto;
 import ua.foxminded.kucherenko.task3.models.*;
@@ -27,9 +27,7 @@ public class UserService {
     @Autowired
     private StudentService studentService;
     @Autowired
-    private RoleService roleService;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public Page<UserEntity> getAllUsers(int page, int size) {
         LOGGER.debug("Getting all the users");
@@ -44,32 +42,31 @@ public class UserService {
         Optional<UserEntity> foundUser = userRepository.findById(userId);
         foundUser.orElseThrow(() -> new IllegalArgumentException("User with the given id doesn't exist"));
         final Role prevRole = foundUser.get().getRole();
-        if (prevRole != null) {
-            final String foundUserRoleName = prevRole.getName();
-            deleteUserFromPrevRoleTable(foundUserRoleName, userId);
-        }
         userRepository.updateUserRoleById(userId, role);
         foundUser.get().setRole(role);
         final String newUserRoleName = role.getName();
         addUserToNewRoleTable(newUserRoleName, foundUser);
+        if (prevRole != null) {
+            final String foundUserRoleName = prevRole.getName();
+            deleteUserFromPrevRoleTable(foundUserRoleName, userId);
+        }
     }
 
     public void saveUser(RegUserDto registrationDto) {
         UserEntity user = new UserEntity();
         user.setUsername(registrationDto.getUsername());
         user.setEmail(registrationDto.getEmail());
-//        user.setPassword(passwordEncoder.encode(regixstrationDto.getPassword()));
-        Role role = roleService.getRoleByName("USER");
-        user.setRole(role);
+        user.setPhone(registrationDto.getPhone());
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         userRepository.save(user);
     }
 
-    public UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
-    public UserEntity findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     private void deleteUserFromPrevRoleTable(String foundUserRoleName, long userId) {

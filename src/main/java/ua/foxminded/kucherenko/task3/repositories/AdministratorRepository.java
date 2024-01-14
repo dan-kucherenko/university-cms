@@ -11,6 +11,15 @@ import ua.foxminded.kucherenko.task3.models.Administrator;
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
     @Modifying
     @Transactional
-    @Query("DELETE FROM Administrator a WHERE a.user.id = :userId")
-    void deleteAdministratorByUserId(long userId);
+    @Query(nativeQuery = true, value = """
+            INSERT INTO administrators (id, username, first_name, last_name, email, phone, role_id, password)
+            VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+            """)
+    void saveAdministratorFromUser(Long id, String username, String firstName, String lastName,
+                                   String email, String phone, int role, String password);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Administrator a WHERE a.id = :id")
+    void deleteAdministratorByUserId(long id);
 }
