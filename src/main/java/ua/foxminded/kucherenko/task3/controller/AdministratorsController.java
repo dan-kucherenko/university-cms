@@ -2,6 +2,8 @@ package ua.foxminded.kucherenko.task3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ public class AdministratorsController {
     private RoleService roleService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERADMIN')")
     public String admins(Model model,
                          @RequestParam(value = "page", defaultValue = "0") int page,
                          @RequestParam(value = "pageSize", defaultValue = "10") int size) {
@@ -34,6 +37,7 @@ public class AdministratorsController {
     }
 
     @GetMapping("/manage-roles")
+    @PostAuthorize("hasAuthority('SUPERADMIN')")
     public String manageRoles(Model model,
                               @RequestParam(value = "page", defaultValue = "0") int page,
                               @RequestParam(value = "pageSize", defaultValue = "10") int size) {

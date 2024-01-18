@@ -20,7 +20,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> getByCourse(String courseName);
 
     @Query("SELECT s.id FROM Student s WHERE s.firstName = :firstName AND s.lastName = :lastName")
-    List<Integer> getIdByName(String firstName, String lastName);
+    List<Long> getIdByName(String firstName, String lastName);
 
     @Query("SELECT s.id FROM Student s")
     List<Integer> getAllStudentIds();

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Administrator;
 import ua.foxminded.kucherenko.task3.repositories.AdministratorRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,11 @@ public class AdministratorService {
         LOGGER.debug("Getting all the administrators");
         final Pageable pageable = PageRequest.of(page, size);
         return repository.findAll(pageable);
+    }
+
+    public List<Administrator> getAllAdmins() {
+        LOGGER.debug("Getting all the administrators");
+        return repository.findAll();
     }
 
     public Optional<Administrator> getAdministratorsById(long adminId) {

@@ -52,7 +52,7 @@ public class StudentService {
         return studentRepository.getByCourse(courseName);
     }
 
-    public List<Integer> getStudentIdsByName(String firstName, String lastName) {
+    public List<Long> getStudentIdsByName(String firstName, String lastName) {
         LOGGER.debug("Getting student id by name");
         return studentRepository.getIdByName(firstName, lastName);
     }

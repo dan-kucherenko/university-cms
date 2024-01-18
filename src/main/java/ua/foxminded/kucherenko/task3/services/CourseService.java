@@ -13,6 +13,7 @@ import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentCourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,11 @@ public class CourseService {
         LOGGER.debug("Getting all the courses");
         final Pageable pageable = PageRequest.of(page, size);
         return courseRepository.findAll(pageable);
+    }
+
+    public List<Course> getAllCourses() {
+        LOGGER.debug("Getting all the courses");
+        return courseRepository.findAll();
     }
 
     public Optional<Course> getCourseById(int courseId) {
