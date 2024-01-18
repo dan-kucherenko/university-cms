@@ -51,9 +51,10 @@ class CourseServiceTest {
 
     @Test
     void addStudentToCourse() {
-        final int studentId = 1;
+        final long studentId = 1;
         final int courseId = 4;
-        final Student student = new Student(studentId, "John", "Doe");
+        final Student student = new Student();
+        student.setId(studentId);
         final Course course = new Course(courseId, "Chemistry");
 
         when(studentCourseRepository.exists(studentId, courseId)).thenReturn(false);
@@ -70,9 +71,10 @@ class CourseServiceTest {
 
     @Test
     void removeStudentFromCourse() {
-        final int studentId = 1;
+        final long studentId = 1;
         final int courseId = 3;
-        final Student student = new Student(studentId, "John", "Doe");
+        final Student student = new Student();
+        student.setId(studentId);
         final Course course = new Course(courseId, "Physics");
 
         when(studentCourseRepository.exists(studentId, courseId)).thenReturn(true);
@@ -89,7 +91,7 @@ class CourseServiceTest {
 
     @Test
     void addStudentToCourseInvalidCourseId() {
-        final Student student = new Student(1, "John", "Doe");
+        final Student student = new Student();
         final Course course = new Course(0, "InvalidCourse");
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->  courseService.addStudentToCourse(student, course));
@@ -97,7 +99,7 @@ class CourseServiceTest {
 
     @Test
     void addStudentToCourseStudentNotFound() {
-        final Student student = new Student(0, "Nonexistent", "Student");
+        final Student student = new Student();
         final Course course = new Course(1, "Math");
 
         when(studentRepository.getIdByName(any(), any())).thenReturn(Collections.emptyList());
@@ -107,7 +109,7 @@ class CourseServiceTest {
 
     @Test
     void removeStudentFromCourseInvalidCourseId() {
-        final Student student = new Student(1, "John", "Doe");
+        final Student student = new Student();
         final Course course = new Course(11, "InvalidCourse");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> courseService.removeStudentFromCourse(student, course));
@@ -115,7 +117,7 @@ class CourseServiceTest {
 
     @Test
     void removeStudentFromCourseStudentNotInCourse() {
-        Student student = new Student(1, "John", "Doe");
+        Student student = new Student();
         Course course = new Course(1, "Math");
 
         when(studentCourseRepository.exists(anyInt(), anyInt())).thenReturn(false);

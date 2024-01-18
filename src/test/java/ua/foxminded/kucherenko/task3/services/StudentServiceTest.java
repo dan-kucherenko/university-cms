@@ -5,13 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import ua.foxminded.kucherenko.task3.models.Group;
 import ua.foxminded.kucherenko.task3.models.Student;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
-import java.time.LocalDate;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -41,7 +38,7 @@ class StudentServiceTest {
     @Test
     void getByCourse() {
         final String courseName = "English";
-        final List<Student> expectedStudents = List.of(new Student(5, "1Charlie1", "Brown"));
+        final List<Student> expectedStudents = List.of(new Student());
 
         when(studentRepository.getByCourse(courseName)).thenReturn(expectedStudents);
 
@@ -53,16 +50,15 @@ class StudentServiceTest {
         Assertions.assertEquals(expectedStudents, resultStudents);
     }
 
-
     @Test
     void getIdByName() {
-        final int expectedStudentId = 2;
+        final long expectedStudentId = 2;
         final String firstName = "Jane";
         final String lastName = "Smith";
 
         when(studentRepository.getIdByName(firstName, lastName)).thenReturn(Collections.singletonList(expectedStudentId));
 
-        final List<Integer> studentIds = studentService.getStudentIdsByName(firstName, lastName);
+        final List<Long> studentIds = studentService.getStudentIdsByName(firstName, lastName);
 
         verify(studentRepository, times(1)).getIdByName(firstName, lastName);
 
@@ -77,11 +73,9 @@ class StudentServiceTest {
 
     @Test
     void updateStudent_NegativeYearOfStudy_ShouldThrowException() {
-        final Integer studentId = 2;
         final Integer yearOfStudy = -1;
-        final Group group = new Group();
-        final LocalDate dateOfBirth = LocalDate.now();
-        final Student student = new Student(studentId, group, "TestName", "TestLastName", dateOfBirth, "test_email", "", yearOfStudy, new HashSet<>());
+        final Student student = new Student();
+        student.setYearOfStudy(yearOfStudy);
         Assertions.assertThrows(IllegalArgumentException.class, () -> studentService.saveStudent(student));
     }
 

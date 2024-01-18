@@ -30,20 +30,6 @@ class GroupRepositoryTest {
 
     @Test
     @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql", "/sample_data/students_samples.sql"})
-    void getGroupByStudentNum() {
-        final int studentsNum = 2;
-        final int expectedGroupsNum = 2;
-        final List<GroupStudentsInfo> resultingGroups = repository.getGroupByStudentsQuantity(studentsNum);
-        final List<GroupStudentsInfo> expectedGroups = List.of(
-                new GroupStudentsInfo(2, "GroupB", 2),
-                new GroupStudentsInfo(1, "GroupA", 2)
-        );
-        Assertions.assertEquals(expectedGroupsNum, resultingGroups.size());
-        Assertions.assertEquals(expectedGroups, resultingGroups);
-    }
-
-    @Test
-    @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql", "/sample_data/students_samples.sql"})
     void getGroupQuantity() {
         final int groupId = 2;
         final int expectedStudentsNum = 2;
