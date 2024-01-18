@@ -29,7 +29,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Transactional
     @Query(nativeQuery = true, value = """
             INSERT INTO students (id, username, first_name, last_name, email, phone, role_id, password)
-            VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+            VALUES (:id, :username, :firstName, :lastName, :email, :phone, :role, :password)
             """)
     void saveStudentFromUser(Long id, String username, String firstName, String lastName,
                                    String email, String phone, int role, String password);

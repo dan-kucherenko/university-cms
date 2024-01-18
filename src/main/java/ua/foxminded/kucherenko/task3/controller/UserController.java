@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @PatchMapping("/update-role")
+    @PatchMapping("/roles")
     public void updateUser(@RequestBody UpdateRoleRequest request) {
         final int id = request.getId();
         final int roleId = request.getRoleId();

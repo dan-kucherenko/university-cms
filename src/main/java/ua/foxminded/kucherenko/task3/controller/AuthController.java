@@ -43,10 +43,7 @@ public class AuthController {
     @PostMapping("/register/save")
     public String register(@Valid @ModelAttribute("user") RegUserDto user,
                            BindingResult result, Model model) {
-        if (userService.existsByEmail(user.getEmail())) {
-            return "redirect:/register?fail";
-        }
-        if (userService.existsByUsername(user.getUsername())) {
+        if (userService.existsByEmailOrUsername(user.getUsername(), user.getEmail())) {
             return "redirect:/register?fail";
         }
         if (result.hasErrors()) {

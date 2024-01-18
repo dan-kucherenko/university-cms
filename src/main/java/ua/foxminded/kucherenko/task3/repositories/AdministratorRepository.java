@@ -13,7 +13,7 @@ public interface AdministratorRepository extends JpaRepository<Administrator, Lo
     @Transactional
     @Query(nativeQuery = true, value = """
             INSERT INTO administrators (id, username, first_name, last_name, email, phone, role_id, password)
-            VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+            VALUES (:id, :username, :firstName, :lastName, :email, :phone, :role, :password)
             """)
     void saveAdministratorFromUser(Long id, String username, String firstName, String lastName,
                                    String email, String phone, int role, String password);
