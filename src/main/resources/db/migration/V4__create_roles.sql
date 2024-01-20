@@ -5,8 +5,7 @@ CREATE TABLE roles
 );
 
 INSERT INTO roles (name)
-VALUES ('STAFF'),
-       ('TEACHER'),
+VALUES ('TEACHER'),
        ('ADMIN'),
        ('SUPERADMIN'),
        ('STUDENT'),
