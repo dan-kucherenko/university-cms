@@ -50,7 +50,8 @@ public class TeacherPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/teachers"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("teachers"));
     }
 
     @Test
@@ -61,7 +62,8 @@ public class TeacherPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/teachers"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("teachers"));
     }
 
     @Test
@@ -72,7 +74,8 @@ public class TeacherPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/teachers"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("teachers"));
     }
 
     @Test
@@ -83,6 +86,7 @@ public class TeacherPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/teachers"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/teachers"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("teachers"));
     }
 }

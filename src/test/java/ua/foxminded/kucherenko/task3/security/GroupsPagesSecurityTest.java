@@ -49,7 +49,8 @@ public class GroupsPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/groups"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("groups"));
     }
 
     @Test
@@ -60,7 +61,8 @@ public class GroupsPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/groups"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("groups"));
     }
 
     @Test
@@ -71,7 +73,8 @@ public class GroupsPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/groups"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("groups"));
     }
 
     @Test
@@ -82,7 +85,8 @@ public class GroupsPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/groups"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/groups"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("groups"));
     }
 
     @Test

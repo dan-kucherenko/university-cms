@@ -50,7 +50,9 @@ public class StudentPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/students"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("students"));;
+        ;
     }
 
     @Test
@@ -61,7 +63,8 @@ public class StudentPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/students"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("students"));;
     }
 
     @Test
@@ -72,7 +75,8 @@ public class StudentPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/students"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("students"));;
     }
 
     @Test
@@ -83,6 +87,7 @@ public class StudentPagesSecurityTest {
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/students"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"));
+                .andExpect(MockMvcResultMatchers.view().name("show_pages/students"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("students"));
     }
 }
