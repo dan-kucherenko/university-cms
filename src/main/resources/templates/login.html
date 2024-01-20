@@ -18,8 +18,8 @@
                      class="img-fluid" alt="Phone image">
             </div>
             <div class="col-md-6 col-sm-12">
-                <div th:if="${param.error}" class="alert alert-danger">
-                    Invalid username and password.
+                <div th:if="${error}" class="alert alert-danger">
+                    <span th:text="${error}"></span>
                 </div>
                 <div th:if="${param.logout}" class="alert alert-success">
                     You have been logged out.

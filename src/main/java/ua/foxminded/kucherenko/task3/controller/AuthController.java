@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ua.foxminded.kucherenko.task3.dto.RegUserDto;
 import ua.foxminded.kucherenko.task3.services.UserService;
 
@@ -24,12 +23,15 @@ public class AuthController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String loginPage(@RequestParam(required = false, defaultValue = "false") boolean error, Model model) {
+    public String loginPage(Model model) {
         LOGGER.debug("Authenticated user: " + SecurityContextHolder.getContext().getAuthentication());
+        return "login";
+    }
 
-        if (error) {
-            model.addAttribute("error", "Invalid username or password. Please try again.");
-        }
+    @GetMapping("/login-error")
+    public String loginErrorPage(Model model) {
+        LOGGER.debug("Authenticated user: " + SecurityContextHolder.getContext().getAuthentication());
+        model.addAttribute("error", "Invalid username or password. Please try again.");
         return "login";
     }
 
