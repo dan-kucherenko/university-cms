@@ -29,11 +29,6 @@ public class AdministratorService {
         return repository.findAll(pageable);
     }
 
-    public List<Administrator> getAllAdmins() {
-        LOGGER.debug("Getting all the administrators");
-        return repository.findAll();
-    }
-
     public Optional<Administrator> getAdministratorsById(long adminId) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Admin id can't be negative or zero");
@@ -45,10 +40,6 @@ public class AdministratorService {
 
     public void saveAdministrator(Administrator admin) {
         LOGGER.debug("Saving the administrator");
-        saveAdministratorFromUserHlpr(admin);
-    }
-
-    private void saveAdministratorFromUserHlpr(Administrator admin) {
         repository.saveAdministratorFromUser(admin.getId(), admin.getUsername(), admin.getFirstName(),
                 admin.getLastName(), admin.getEmail(), admin.getPhone(), admin.getRole().getId(), admin.getPassword());
     }
@@ -58,16 +49,14 @@ public class AdministratorService {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }
 
-        Optional<Administrator> foundAdministrator = repository.findById(adminId);
-        foundAdministrator.orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
+        Administrator foundAdministrator = repository.findById(adminId).orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
 
-        final Administrator existingAdmin = foundAdministrator.get();
-        existingAdmin.setFirstName(admin.getFirstName());
-        existingAdmin.setLastName(admin.getLastName());
-        existingAdmin.setEmail(admin.getEmail());
-        existingAdmin.setPhone(admin.getPhone());
+        foundAdministrator.setFirstName(admin.getFirstName());
+        foundAdministrator.setLastName(admin.getLastName());
+        foundAdministrator.setEmail(admin.getEmail());
+        foundAdministrator.setPhone(admin.getPhone());
 
-        repository.save(existingAdmin);
+        repository.save(foundAdministrator);
         LOGGER.debug("Administrator with id {} has been updated", adminId);
     }
 

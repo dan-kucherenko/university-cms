@@ -18,8 +18,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -27,7 +25,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
-        LOGGER.debug("Authenticated user: " + SecurityContextHolder.getContext().getAuthentication());
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(rQ ->
@@ -35,16 +32,17 @@ public class SecurityConfig {
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/administrators/manage-roles").hasAnyAuthority("ADMIN", "SUPERADMIN")
                                 .requestMatchers("/administrators").hasAnyAuthority("ADMIN", "SUPERADMIN")
-                                .requestMatchers( "/departments/**").hasAnyAuthority("ADMIN", "SUPERADMIN", "TEACHER")
-                                .requestMatchers("/teachers/**", "/courses/**", "/groups/**", "/students/**").hasAnyAuthority("ADMIN", "SUPERADMIN", "STUDENT", "TEACHER")
+                                .requestMatchers("/departments").hasAnyAuthority("ADMIN", "SUPERADMIN", "TEACHER")
+                                .requestMatchers("/teachers", "/courses", "/groups", "/students").hasAnyAuthority("ADMIN", "SUPERADMIN", "STUDENT", "TEACHER")
                                 .anyRequest().authenticated())
                 .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
+                        .permitAll()
                         .loginProcessingUrl("/login")
                         .successHandler((request, response, authentication) -> {
                             SecurityContextHolder.getContext().setAuthentication(authentication);
                             response.sendRedirect("/home");
                         })
-                        .failureUrl("/login?error")
+                        .failureUrl("/login-error")
                         .permitAll())
                 .logout(logoutConfigurer ->
                         logoutConfigurer.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());

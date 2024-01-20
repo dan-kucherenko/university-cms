@@ -12,8 +12,6 @@ import ua.foxminded.kucherenko.task3.dto.RegUserDto;
 import ua.foxminded.kucherenko.task3.models.*;
 import ua.foxminded.kucherenko.task3.repositories.UserRepository;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
@@ -39,11 +37,10 @@ public class UserService {
         if (userId < 1) {
             throw new IllegalArgumentException("User id can't be negative or zero");
         }
-        Optional<UserEntity> foundUser = userRepository.findById(userId);
-        foundUser.orElseThrow(() -> new IllegalArgumentException("User with the given id doesn't exist"));
-        final Role prevRole = foundUser.get().getRole();
+        UserEntity foundUser = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User with the given id doesn't exist"));
+        final Role prevRole = foundUser.getRole();
         userRepository.updateUserRoleById(userId, role);
-        foundUser.get().setRole(role);
+        foundUser.setRole(role);
         final String newUserRoleName = role.getName();
         addUserToNewRoleTable(newUserRoleName, foundUser);
         if (prevRole != null) {
@@ -76,12 +73,11 @@ public class UserService {
         }
     }
 
-    private void addUserToNewRoleTable(String newUserRoleName, Optional<UserEntity> foundUser) {
-        UserEntity user = foundUser.get();
+    private void addUserToNewRoleTable(String newUserRoleName, UserEntity foundUser) {
         switch (newUserRoleName) {
-            case "ADMIN", "SUPERADMIN" -> administratorService.saveAdministrator(new Administrator(user));
-            case "STUDENT" -> studentService.saveStudent(new Student(user));
-            case "TEACHER" -> teacherService.saveTeacher(new Teacher(user));
+            case "ADMIN", "SUPERADMIN" -> administratorService.saveAdministrator(new Administrator(foundUser));
+            case "STUDENT" -> studentService.saveStudent(new Student(foundUser));
+            case "TEACHER" -> teacherService.saveTeacher(new Teacher(foundUser));
             default -> LOGGER.debug("Error deleting user in other tables");
         }
     }
