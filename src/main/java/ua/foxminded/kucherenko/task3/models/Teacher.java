@@ -31,6 +31,12 @@ public class Teacher extends UserEntity {
         this.setPassword(user.getPassword());
     }
 
+    public Teacher(long id, String firstName, String lastName) {
+        this.setId(id);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+    }
+
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }

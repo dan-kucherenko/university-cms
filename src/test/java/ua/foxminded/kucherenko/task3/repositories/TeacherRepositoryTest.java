@@ -25,11 +25,11 @@ class TeacherRepositoryTest {
     void getTeacherByDepartment() {
         final int departmentId = 1;
         final Department department = new Department(departmentId, "Engineering", "Technical");
-        final Teacher techer1 = new Teacher();
-        final Teacher techer2 = new Teacher();
-        techer1.setDepartment(department);
-        techer2.setDepartment(department);
-        final List<Teacher> expectedTeachers = List.of(techer1, techer2);
+        final Teacher teacher1 = new Teacher(4, "Alice", "Williams");
+        final Teacher teacher2 = new Teacher(7, "1Charlie3", "Brown");
+        teacher1.setDepartment(department);
+        teacher2.setDepartment(department);
+        final List<Teacher> expectedTeachers = List.of(teacher1, teacher2);
 
         final List<Teacher> actualTeachers = repository.getTeachersByDepartmentDepartmentId(departmentId);
 

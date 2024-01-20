@@ -20,4 +20,10 @@ public class Administrator extends UserEntity {
         this.setRole(user.getRole());
         this.setPassword(user.getPassword());
     }
+
+    public Administrator(long id, String firstName, String lastName) {
+        this.setId(id);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+    }
 }

@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ua.foxminded.kucherenko.task3.models.Course;
 import ua.foxminded.kucherenko.task3.services.CourseService;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
