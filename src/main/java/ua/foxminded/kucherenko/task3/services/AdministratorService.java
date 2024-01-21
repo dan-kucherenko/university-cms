@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Administrator;
+import ua.foxminded.kucherenko.task3.models.UserEntity;
 import ua.foxminded.kucherenko.task3.repositories.AdministratorRepository;
 
 import java.util.List;
@@ -38,10 +39,9 @@ public class AdministratorService {
         return repository.findById(adminId);
     }
 
-    public void saveAdministrator(Administrator admin) {
+    public void saveAdministrator(UserEntity user) {
         LOGGER.debug("Saving the administrator");
-        repository.saveAdministratorFromUser(admin.getId(), admin.getUsername(), admin.getFirstName(),
-                admin.getLastName(), admin.getEmail(), admin.getPhone(), admin.getRole().getId(), admin.getPassword());
+        repository.saveAdministratorFromUser(user);
     }
 
     public void updateAdminData(long adminId, Administrator admin) {

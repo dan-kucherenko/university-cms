@@ -63,12 +63,7 @@ public class StudentService {
         }
 
         LOGGER.debug("Saving the student");
-        saveStudentFromUserHlpr(student);
-    }
-
-    private void saveStudentFromUserHlpr(Student student) {
-        studentRepository.saveStudentFromUser(student.getId(), student.getUsername(), student.getFirstName(),
-                student.getLastName(), student.getEmail(), student.getPhone(), student.getRole().getId(), student.getPassword());
+        studentRepository.saveStudentFromUser(student);
     }
 
     public void updateStudent(long studentId, Student updatedStudent) {

@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Teacher;
+import ua.foxminded.kucherenko.task3.models.UserEntity;
 import ua.foxminded.kucherenko.task3.repositories.TeacherRepository;
 
 import java.util.List;
@@ -46,14 +47,9 @@ public class TeacherService {
         return repository.getTeachersByDepartmentDepartmentId(departmentId);
     }
 
-    public void saveTeacher(Teacher teacher) {
+    public void saveTeacher(UserEntity user) {
         LOGGER.debug("Saving the teacher");
-        saveTeacherFromUserHlpr(teacher);
-    }
-
-    private void saveTeacherFromUserHlpr(Teacher teacher) {
-        repository.saveTeacherFromUser(teacher.getId(), teacher.getUsername(), teacher.getFirstName(),
-                teacher.getLastName(), teacher.getEmail(), teacher.getPhone(), teacher.getRole().getId(), teacher.getPassword());
+        repository.saveTeacherFromUser(user);
     }
 
     public void updateTeacher(long teacherId, Teacher updatedTeacher) {

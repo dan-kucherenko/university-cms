@@ -59,7 +59,7 @@ public class UserService {
     }
 
     public boolean existsByEmailOrUsername(String username, String email) {
-        return userRepository.existsByEmail(email) || userRepository.existsByUsername(username);
+        return userRepository.existsByEmailOrUsername(email, username);
     }
 
     private void deleteUserFromPrevRoleTable(String foundUserRoleName, long userId) {
@@ -75,9 +75,9 @@ public class UserService {
 
     private void addUserToNewRoleTable(String newUserRoleName, UserEntity foundUser) {
         switch (newUserRoleName) {
-            case "ADMIN", "SUPERADMIN" -> administratorService.saveAdministrator(new Administrator(foundUser));
+            case "ADMIN", "SUPERADMIN" -> administratorService.saveAdministrator(foundUser);
             case "STUDENT" -> studentService.saveStudent(new Student(foundUser));
-            case "TEACHER" -> teacherService.saveTeacher(new Teacher(foundUser));
+            case "TEACHER" -> teacherService.saveTeacher(foundUser);
             default -> LOGGER.debug("Error deleting user in other tables");
         }
     }

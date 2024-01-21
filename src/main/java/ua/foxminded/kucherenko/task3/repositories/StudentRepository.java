@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.kucherenko.task3.models.Student;
+import ua.foxminded.kucherenko.task3.models.UserEntity;
 
 import java.util.List;
 
@@ -33,6 +34,13 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             """)
     void saveStudentFromUser(Long id, String username, String firstName, String lastName,
                                    String email, String phone, int role, String password);
+
+    @Modifying
+    @Transactional
+    default void saveStudentFromUser(Student student) {
+        saveStudentFromUser(student.getId(), student.getUsername(), student.getFirstName(), student.getLastName(),
+                student.getEmail(), student.getPhone(), student.getRole().getId(), student.getPassword());
+    }
 
     @Modifying
     @Transactional
