@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(rQ ->
                         rQ.requestMatchers("/home").permitAll()
                                 .requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/administrators/manage-roles").hasAnyAuthority("ADMIN", "SUPERADMIN")
+                                .requestMatchers("/administrators/manage-roles").hasAnyAuthority( "SUPERADMIN")
                                 .requestMatchers("/administrators").hasAnyAuthority("ADMIN", "SUPERADMIN")
                                 .requestMatchers("/departments").hasAnyAuthority("ADMIN", "SUPERADMIN", "TEACHER")
                                 .requestMatchers("/teachers", "/courses", "/groups", "/students").hasAnyAuthority("ADMIN", "SUPERADMIN", "STUDENT", "TEACHER")
