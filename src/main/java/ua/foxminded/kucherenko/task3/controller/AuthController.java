@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.foxminded.kucherenko.task3.dto.RegUserDto;
 import ua.foxminded.kucherenko.task3.services.UserService;
 
@@ -44,15 +45,18 @@ public class AuthController {
 
     @PostMapping("/register/save")
     public String register(@Valid @ModelAttribute("user") RegUserDto user,
-                           BindingResult result, Model model) {
+                           BindingResult result,
+                           RedirectAttributes redirectAttributes, Model model) {
         if (userService.existsByEmailOrUsername(user.getUsername(), user.getEmail())) {
-            return "redirect:/register?fail";
+            redirectAttributes.addAttribute("fail", true);
+            return "redirect:/register";
         }
         if (result.hasErrors()) {
             model.addAttribute("user", user);
             return "register";
         }
         userService.saveUser(user);
-        return "redirect:/home?success";
+        redirectAttributes.addAttribute("success", true);
+        return "redirect:/home";
     }
 }
