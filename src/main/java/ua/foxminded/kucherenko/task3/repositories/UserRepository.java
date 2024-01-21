@@ -10,8 +10,7 @@ import ua.foxminded.kucherenko.task3.models.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    boolean existsByEmail(String email);
-    boolean existsByUsername(String username);
+    boolean existsByEmailOrUsername(String email, String username);
     UserEntity findFirstByUsername(String username);
 
     @Modifying
