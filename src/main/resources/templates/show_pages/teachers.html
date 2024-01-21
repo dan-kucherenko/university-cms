@@ -33,14 +33,14 @@
             <td th:text="${teacher.lastName}"/>
             <td>
                 <span th:if="${teacher.dateOfBirth != null}" th:text="${teacher.dateOfBirth}"/>
-                <span/>
             </td>
             <td th:text="${teacher.email}"/>
             <td th:text="${teacher.phone}"/>
-            <td th:text="${teacher.department.departmentName}"/>
+            <td>
+                <span th:if="${teacher.department != null}" th:text="${teacher.department.departmentName}"/>
+            </td>
             <td>
                 <span th:if="${teacher.salary != null}" th:text="${teacher.salary}"/>
-                <span/>
             </td>
         </tr>
         </tbody>
