@@ -19,6 +19,18 @@ class StudentCourseRepositoryTest {
     @Test
     @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql", "/sample_data/courses_samples.sql",
             "/sample_data/students_samples.sql", "/sample_data/student_courses_samples.sql"})
+    void countStudentCourses() {
+        final int studentId = 1;
+
+        final int expectedCoursesNum = 3;
+
+        final int actualCoursesNum = repository.countCourseByStudentId(studentId);
+        Assertions.assertEquals(expectedCoursesNum, actualCoursesNum);
+    }
+
+    @Test
+    @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql", "/sample_data/courses_samples.sql",
+            "/sample_data/students_samples.sql", "/sample_data/student_courses_samples.sql"})
     void checkWhetherStudentCourseExists() {
         final int studentId = 1;
         final int courseId = 3;

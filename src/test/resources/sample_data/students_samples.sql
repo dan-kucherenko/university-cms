@@ -1,8 +1,16 @@
-INSERT INTO university.students (group_id, first_name, last_name)
-VALUES (1, 'John', 'Doe'),
-       (1, 'Jane', 'Smith'),
-       (2, 'Bob', 'Johnson'),
-       (2, 'Alice', 'Williams'),
-       (3, '1Charlie1', 'Brown'),
-       (3, '1Charlie2', 'Brown'),
-       (3, '1Charlie3', 'Brown');
+INSERT INTO university.students (id, group_id, date_of_birth, year_of_study, first_name, last_name, email, phone,
+                                 role_id, username, password)
+VALUES (1, 1, '1998-08-12', 1, 'Alice', 'Johnson', 'alice.johnson@example.com', '1111111111', 2, 'alice_student',
+        'student789'),
+       (2, 1, '1998-08-12', 1, 'Jane', 'Smith', 'alice.johnson@example.com', '1111111111', 2, 'alice_student',
+        'student789'),
+       (3, 2, '1997-04-05', 4, 'Bob', 'Williams', 'bob.williams@example.com', '2222222222', 2, 'bob_student',
+        'student101'),
+       (4, 2, '1996-10-20', 3, 'Eva', 'Martinez', 'eva.martinez@example.com', '3333333333', 2, 'eva_student',
+        'student202'),
+       (5, 3, '1996-10-20', 3, 'Eva', 'Martinez', 'eva.martinez@example.com', '3333333333', 2, 'eva_student',
+        'student202'),
+       (6, 3, '1996-10-20', 3, 'Eva', 'Martinez', 'eva.martinez@example.com', '3333333333', 2, 'eva_student',
+        'student202'),
+       (7, 3, '1997-04-05', 4, 'Bob', 'Williams', 'bob.williams@example.com', '2222222222', 2, 'bob_student',
+        'student101');

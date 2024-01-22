@@ -32,11 +32,12 @@ class StudentRepositoryTest {
     @Sql({"/database/drop_tables.sql", "/database/create_tables.sql", "/sample_data/groups_samples.sql", "/sample_data/students_samples.sql",
             "/sample_data/courses_samples.sql", "/sample_data/student_courses_samples.sql"})
     void getByCourse() {
-        final String courseName = "English";
+        final String courseName = "Biology";
         final List<Student> resultStudents = repository.getByCourse(courseName);
         final List<Student> expectedStudents = List.of(
-                new Student(4, "Alice", "Williams"),
-                new Student(7, "1Charlie3", "Brown")
+                new Student(1, "Alice", "Johnson"),
+                new Student(3, "Bob", "Williams"),
+                new Student(6, "Eva", "Martinez")
         );
         Assertions.assertEquals(expectedStudents.size(), resultStudents.size());
         Assertions.assertEquals(expectedStudents, resultStudents);

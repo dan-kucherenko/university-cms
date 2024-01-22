@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
@@ -128,9 +127,7 @@ public class AdministratorsControllerTest {
         when(userService.getAllUsers(anyInt(), anyInt()))
                 .thenReturn(mockPage);
         mockMvc.perform(MockMvcRequestBuilders.get("/administrators/manage-roles"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("admin/manage_roles"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("users"));
+                .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
     @Test

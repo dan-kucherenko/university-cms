@@ -13,6 +13,7 @@ import java.time.Period;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Teacher extends UserEntity {
     private LocalDate dateOfBirth;
     @ManyToOne

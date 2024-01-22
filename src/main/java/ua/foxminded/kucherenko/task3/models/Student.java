@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Student extends UserEntity {
     @OneToOne
     @JoinColumn(name = "group_id")
