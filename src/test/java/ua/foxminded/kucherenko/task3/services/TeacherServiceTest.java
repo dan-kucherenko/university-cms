@@ -24,10 +24,11 @@ class TeacherServiceTest {
     void getTeacherByDepartment() {
         final int departmentId = 1;
         final Department department = new Department(departmentId, "Engineering", "Technical");
-        final List<Teacher> expectedTeachers = List.of(
-                new Teacher(1, "John", "Doe", "john.doe@example.com", "1234567890", department),
-                new Teacher(3, "Bob", "Johnson", "bob.johnson@example.com", "1112233445", department)
-        );
+        final Teacher teacher1 = new Teacher();
+        final Teacher teacher2 = new Teacher();
+        teacher1.setDepartment(department);
+        teacher2.setDepartment(department);
+        final List<Teacher> expectedTeachers = List.of(teacher1, teacher2);
 
         when(teacherRepository.getTeachersByDepartmentDepartmentId(departmentId)).thenReturn(expectedTeachers);
 
@@ -52,14 +53,14 @@ class TeacherServiceTest {
     }
 
     @Test
-    void updateTeacher_NegativeTeacherId_ShouldThrowException () {
+    void updateTeacher_NegativeTeacherId_ShouldThrowException() {
         final int teacherId = -1;
         final Teacher teacher = new Teacher();
         Assertions.assertThrows(IllegalArgumentException.class, () -> teacherService.updateTeacher(teacherId, teacher));
     }
 
     @Test
-    void deleteTeacher_NegativeTeacherId_ShouldThrowException () {
+    void deleteTeacher_NegativeTeacherId_ShouldThrowException() {
         final int teacherId = -1;
         Assertions.assertThrows(IllegalArgumentException.class, () -> teacherService.deleteTeacher(teacherId));
     }

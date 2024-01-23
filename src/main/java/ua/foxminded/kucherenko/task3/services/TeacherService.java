@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Teacher;
+import ua.foxminded.kucherenko.task3.models.UserEntity;
 import ua.foxminded.kucherenko.task3.repositories.TeacherRepository;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class TeacherService {
         return repository.findAll(pageable);
     }
 
-    public Optional<Teacher> getTeacherById(int teacherId) {
+    public Optional<Teacher> getTeacherById(long teacherId) {
         if (teacherId < 1) {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");
         }
@@ -46,12 +47,12 @@ public class TeacherService {
         return repository.getTeachersByDepartmentDepartmentId(departmentId);
     }
 
-    public Teacher saveTeacher(Teacher teacher) {
+    public void saveTeacher(UserEntity user) {
         LOGGER.debug("Saving the teacher");
-        return repository.save(teacher);
+        repository.saveTeacherFromUser(user);
     }
 
-    public void updateTeacher(int teacherId, Teacher updatedTeacher) {
+    public void updateTeacher(long teacherId, Teacher updatedTeacher) {
         if (teacherId < 1) {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");
         }
@@ -72,10 +73,17 @@ public class TeacherService {
         LOGGER.debug("Teacher with ID {} has been updated", teacherId);
     }
 
-    public void deleteTeacher(int teacherId) {
+    public void deleteTeacher(long teacherId) {
         if (teacherId < 1) {
             throw new IllegalArgumentException("Teacher id can't be negative or zero");
         }
         repository.deleteById(teacherId);
+    }
+
+    public void deleteTeacherByUserId(long userId) {
+        if (userId < 1) {
+            throw new IllegalArgumentException("Administrator id can't be negative or zero");
+        }
+        repository.deleteTeacherByUserId(userId);
     }
 }

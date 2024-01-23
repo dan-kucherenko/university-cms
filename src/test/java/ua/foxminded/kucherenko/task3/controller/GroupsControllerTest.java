@@ -5,6 +5,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,10 +30,12 @@ public class GroupsControllerTest {
     private GroupService groupService;
 
     @Test
+    @WithMockUser(username = "student", authorities = {"STUDENT"})
     public void shouldReturnOneGroupView() throws Exception {
         final List<Group> testGroupsList = List.of(new Group(1, "TestGroup", "TestFaculty", "TestSpeciality"));
-
-        when(groupService.getAllGroups()).thenReturn(testGroupsList);
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<Group> testGroupsPage = new PageImpl<>(testGroupsList, pageRequest, testGroupsList.size());
+        when(groupService.getAllGroups(0,10)).thenReturn(testGroupsPage);
 
         mvc
                 .perform(MockMvcRequestBuilders.get("/groups"))

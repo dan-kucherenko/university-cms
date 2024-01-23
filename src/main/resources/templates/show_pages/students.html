@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <tr th:each="student : ${students}">
-            <th scope="row" th:text="${student.studentId}"/>
+            <th scope="row" th:text="${student.id}"/>
             <td>
                 <span th:if="${student.group != null}" th:text="${student.group.groupName}"/>
                 <span/>
@@ -57,7 +57,7 @@
     <nav>
         <ul class="pagination justify-content-center">
             <li th:if="${pageNo > 0 && pageNo != 1}" class="page-item">
-                <a class="page-link" th:href="@{'/students?page=' + ${pageNo - 1} + '&size=' + ${pageSize}}">Previous</a>
+                <a class="page-link" th:href="@{'/students?page=' + ${pageNo - 2} + '&size=' + ${pageSize}}">Previous</a>
             </li>
             <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber + 1 == pageNo ? 'page-item active' : 'page-item'}">
                 <a class="page-link" th:href="@{'/students?page=' + ${pageNumber} + '&size=' + ${pageSize}}" th:text="${pageNumber + 1}"></a>

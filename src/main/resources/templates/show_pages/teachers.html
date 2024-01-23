@@ -28,19 +28,19 @@
         </thead>
         <tbody>
         <tr th:each="teacher : ${teachers}">
-            <th scope="row" th:text="${teacher.teacherId}"/>
+            <th scope="row" th:text="${teacher.id}"/>
             <td th:text="${teacher.firstName}"/>
             <td th:text="${teacher.lastName}"/>
             <td>
                 <span th:if="${teacher.dateOfBirth != null}" th:text="${teacher.dateOfBirth}"/>
-                <span/>
             </td>
             <td th:text="${teacher.email}"/>
             <td th:text="${teacher.phone}"/>
-            <td th:text="${teacher.department.departmentName}"/>
+            <td>
+                <span th:if="${teacher.department != null}" th:text="${teacher.department.departmentName}"/>
+            </td>
             <td>
                 <span th:if="${teacher.salary != null}" th:text="${teacher.salary}"/>
-                <span/>
             </td>
         </tr>
         </tbody>
@@ -48,7 +48,7 @@
     <nav>
         <ul class="pagination justify-content-center">
             <li th:if="${pageNo > 0 && pageNo != 1}" class="page-item">
-                <a class="page-link" th:href="@{'/teachers?page=' + ${pageNo - 1} + '&size=' + ${pageSize}}">Previous</a>
+                <a class="page-link" th:href="@{'/teachers?page=' + ${pageNo - 2} + '&size=' + ${pageSize}}">Previous</a>
             </li>
             <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNumber + 1 == pageNo ? 'page-item active' : 'page-item'}">
                 <a class="page-link" th:href="@{'/teachers?page=' + ${pageNumber} + '&size=' + ${pageSize}}" th:text="${pageNumber + 1}"></a>

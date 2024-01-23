@@ -39,7 +39,7 @@ class GroupRepositoryTest {
                 new GroupStudentsInfo(1, "GroupA", 2)
         );
         Assertions.assertEquals(expectedGroupsNum, resultingGroups.size());
-        Assertions.assertEquals(expectedGroups, resultingGroups);
+        Assertions.assertEquals(expectedGroups,  resultingGroups);
     }
 
     @Test

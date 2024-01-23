@@ -13,6 +13,7 @@ import ua.foxminded.kucherenko.task3.repositories.CourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentCourseRepository;
 import ua.foxminded.kucherenko.task3.repositories.StudentRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,11 @@ public class CourseService {
         LOGGER.debug("Getting all the courses");
         final Pageable pageable = PageRequest.of(page, size);
         return courseRepository.findAll(pageable);
+    }
+
+    public List<Course> getAllCourses() {
+        LOGGER.debug("Getting all the courses");
+        return courseRepository.findAll();
     }
 
     public Optional<Course> getCourseById(int courseId) {
@@ -78,27 +84,27 @@ public class CourseService {
         if (course.getCourseId() <= 0) {
             throw new IllegalArgumentException("Invalid course id: it should be more than 0");
         }
-        Optional<Student> foundStudent = studentRepository.findById(student.getStudentId());
+        Optional<Student> foundStudent = studentRepository.findById(student.getId());
         foundStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
 
         Optional<Course> dbCourse = courseRepository.findById(course.getCourseId());
         dbCourse.orElseThrow(() -> new IllegalArgumentException("Invalid course id: course id is less than 0 or course doesn't exist"));
 
-        if (studentCourseRepository.exists(foundStudent.get().getStudentId(), course.getCourseId())) {
+        if (studentCourseRepository.exists(foundStudent.get().getId(), course.getCourseId())) {
             throw new IllegalArgumentException("This record already exists");
         }
-        studentCourseRepository.addStudentToCourse(foundStudent.get().getStudentId(), course.getCourseId());
-        LOGGER.debug("Student with id {} was successfully added to course {}", foundStudent.get().getStudentId(), course.getCourseId());
+        studentCourseRepository.addStudentToCourse(foundStudent.get().getId(), course.getCourseId());
+        LOGGER.debug("Student with id {} was successfully added to course {}", foundStudent.get().getId(), course.getCourseId());
     }
 
     public void removeStudentFromCourse(Student student, Course course) {
         if (course.getCourseId() <= 0) {
             throw new IllegalArgumentException("Course Id should be more then 0 or 0");
         }
-        Optional<Student> foundStudent = studentRepository.findById(student.getStudentId());
+        Optional<Student> foundStudent = studentRepository.findById(student.getId());
         foundStudent.orElseThrow(() -> new IllegalArgumentException("Invalid student id: student id is less than 0 or student doesn't exist"));
 
-        Integer studentId = foundStudent.get().getStudentId();
+        Long studentId = foundStudent.get().getId();
         if (!studentCourseRepository.exists(studentId, course.getCourseId())) {
             throw new IllegalArgumentException("This record doesn't exist");
         }

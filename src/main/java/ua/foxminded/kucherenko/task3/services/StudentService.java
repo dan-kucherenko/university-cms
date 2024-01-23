@@ -33,7 +33,7 @@ public class StudentService {
         return studentRepository.findAll(pageable);
     }
 
-    public Optional<Student> getStudentById(int studentId) {
+    public Optional<Student> getStudentById(long studentId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
@@ -52,21 +52,21 @@ public class StudentService {
         return studentRepository.getByCourse(courseName);
     }
 
-    public List<Integer> getStudentIdsByName(String firstName, String lastName) {
+    public List<Long> getStudentIdsByName(String firstName, String lastName) {
         LOGGER.debug("Getting student id by name");
         return studentRepository.getIdByName(firstName, lastName);
     }
 
-    public Student saveStudent(Student student) {
-        if (student.getYearOfStudy() < 0) {
+    public void saveStudent(Student student) {
+        if (student.getYearOfStudy() != null && student.getYearOfStudy() < 0) {
             throw new IllegalArgumentException("Student can't have negative year of study");
         }
 
-        LOGGER.debug("New student has been saved");
-        return studentRepository.save(student);
+        LOGGER.debug("Saving the student");
+        studentRepository.saveStudentFromUser(student);
     }
 
-    public void updateStudent(int studentId, Student updatedStudent) {
+    public void updateStudent(long studentId, Student updatedStudent) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
@@ -86,7 +86,7 @@ public class StudentService {
         LOGGER.debug("Student with ID {} has been updated", studentId);
     }
 
-    public void deleteStudent(int studentId) {
+    public void deleteStudent(long studentId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id can't be negative or zero");
         }
@@ -95,7 +95,14 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
-    public boolean exists(int studentId, int courseId) {
+    public void deleteStudentByUserId(long userId) {
+        if (userId < 1) {
+            throw new IllegalArgumentException("Administrator id can't be negative or zero");
+        }
+        studentRepository.deleteStudentByUserId(userId);
+    }
+
+    public boolean exists(long studentId, int courseId) {
         if (studentId < 1) {
             throw new IllegalArgumentException("Student id cant be negative or less than zero");
         } else if (courseId < 1) {

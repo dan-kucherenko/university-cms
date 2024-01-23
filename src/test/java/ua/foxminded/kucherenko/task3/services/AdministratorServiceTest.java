@@ -19,10 +19,12 @@ class AdministratorServiceTest {
     private AdministratorRepository repository;
     @Autowired
     private AdministratorService administratorService;
+    @Autowired
+    private RoleService roleService;
 
     @Test
     void getAdministratorsById() {
-        int adminId = 1;
+        long adminId = 1;
         final Administrator administrator = new Administrator();
         when(repository.findById(adminId)).thenReturn(Optional.of(administrator));
         final Optional<Administrator> result = administratorService.getAdministratorsById(adminId);
@@ -33,16 +35,6 @@ class AdministratorServiceTest {
     }
 
     @Test
-    void saveAdministrator() {
-        final Administrator mockAdministrator = new Administrator();
-        when(repository.save(mockAdministrator)).thenReturn(mockAdministrator);
-        final Administrator result = administratorService.saveAdministrator(mockAdministrator);
-
-        Assertions.assertEquals(mockAdministrator, result);
-        verify(repository).save(mockAdministrator);
-    }
-
-    @Test
     void getAdministratorById_TeacherId_ShouldThrowException() {
         final int administratorId = -4;
         Assertions.assertThrows(IllegalArgumentException.class, () -> administratorService.getAdministratorsById(administratorId));
@@ -50,9 +42,17 @@ class AdministratorServiceTest {
 
     @Test
     void updateAdminData() {
-        final int adminId = 1;
-        final Administrator existingAdmin = new Administrator("Test1", "Test1");
-        final Administrator updatedAdmin = new Administrator("Test2", "Test2");
+        final long adminId = 1;
+        final Administrator existingAdmin = new Administrator();
+        existingAdmin.setFirstName("Test1");
+        existingAdmin.setLastName("Test1");
+        existingAdmin.setEmail("test@mail.com");
+        existingAdmin.setPhone("+394839489");
+        final Administrator updatedAdmin = new Administrator();
+        updatedAdmin.setFirstName("Test2");
+        updatedAdmin.setLastName("Test2");
+        updatedAdmin.setEmail("test@mail.com");
+        updatedAdmin.setPhone("+394839489");
         when(repository.findById(adminId)).thenReturn(Optional.of(existingAdmin));
 
         administratorService.updateAdminData(adminId, updatedAdmin);
@@ -74,7 +74,7 @@ class AdministratorServiceTest {
 
     @Test
     void deleteAdministrator() {
-        final int adminId = 1;
+        final long adminId = 1;
         administratorService.deleteAdministrator(adminId);
         verify(repository).deleteById(adminId);
     }

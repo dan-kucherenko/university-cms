@@ -5,6 +5,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,10 +30,13 @@ public class TeachersControllerTest {
     private TeacherService teacherService;
 
     @Test
+    @WithMockUser(username = "teacher", authorities = "TEACHER")
     public void shouldReturnOneTeacherView() throws Exception{
-        final List<Teacher> testTeachersList = List.of(new Teacher(1, "FirstName", "LastName", "email", "phone", new Department()));
+        final List<Teacher> testTeachersList = List.of(new Teacher());
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<Teacher> testTeachersPage = new PageImpl<>(testTeachersList, pageRequest, testTeachersList.size());
 
-        when(teacherService.getAllTeachers()).thenReturn(testTeachersList);
+        when(teacherService.getAllTeachers(0,10)).thenReturn(testTeachersPage);
 
         mvc
                 .perform(MockMvcRequestBuilders.get("/teachers"))

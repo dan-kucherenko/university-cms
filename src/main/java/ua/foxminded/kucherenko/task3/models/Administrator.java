@@ -7,18 +7,23 @@ import lombok.*;
 @Table(name = "administrators")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @RequiredArgsConstructor
-public class Administrator {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private int id;
-    @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
-    private String email;
-    private String phone;
+@ToString
+public class Administrator extends UserEntity {
+    public Administrator(UserEntity user) {
+        this.setId(user.getId());
+        this.setUsername(user.getUsername());
+        this.setFirstName(user.getFirstName());
+        this.setLastName(user.getLastName());
+        this.setEmail(user.getEmail());
+        this.setPhone(user.getPhone());
+        this.setRole(user.getRole());
+        this.setPassword(user.getPassword());
+    }
+
+    public Administrator(long id, String firstName, String lastName) {
+        this.setId(id);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+    }
 }

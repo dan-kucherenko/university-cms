@@ -8,8 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.foxminded.kucherenko.task3.models.Administrator;
+import ua.foxminded.kucherenko.task3.models.UserEntity;
 import ua.foxminded.kucherenko.task3.repositories.AdministratorRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +30,7 @@ public class AdministratorService {
         return repository.findAll(pageable);
     }
 
-    public Optional<Administrator> getAdministratorsById (int adminId) {
+    public Optional<Administrator> getAdministratorsById(long adminId) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Admin id can't be negative or zero");
         }
@@ -37,33 +39,38 @@ public class AdministratorService {
         return repository.findById(adminId);
     }
 
-    public Administrator saveAdministrator(Administrator admin) {
+    public void saveAdministrator(UserEntity user) {
         LOGGER.debug("Saving the administrator");
-        return repository.save(admin);
+        repository.saveAdministratorFromUser(user);
     }
 
-    public void updateAdminData(int adminId, Administrator admin) {
+    public void updateAdminData(long adminId, Administrator admin) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }
 
-        Optional<Administrator> foundAdministrator = repository.findById(adminId);
-        foundAdministrator.orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
+        Administrator foundAdministrator = repository.findById(adminId).orElseThrow(() -> new IllegalArgumentException("Administrator with the given id doesn't exist"));
 
-        final Administrator existingAdmin = foundAdministrator.get();
-        existingAdmin.setFirstName(admin.getFirstName());
-        existingAdmin.setLastName(admin.getLastName());
-        existingAdmin.setEmail(admin.getEmail());
-        existingAdmin.setPhone(admin.getPhone());
+        foundAdministrator.setFirstName(admin.getFirstName());
+        foundAdministrator.setLastName(admin.getLastName());
+        foundAdministrator.setEmail(admin.getEmail());
+        foundAdministrator.setPhone(admin.getPhone());
 
-        repository.save(existingAdmin);
+        repository.save(foundAdministrator);
         LOGGER.debug("Administrator with id {} has been updated", adminId);
     }
 
-    public void deleteAdministrator(int adminId) {
+    public void deleteAdministrator(long adminId) {
         if (adminId < 1) {
             throw new IllegalArgumentException("Administrator id can't be negative or zero");
         }
         repository.deleteById(adminId);
+    }
+
+    public void deleteAdministratorByUserId(long userId) {
+        if (userId < 1) {
+            throw new IllegalArgumentException("Administrator id can't be negative or zero");
+        }
+        repository.deleteAdministratorByUserId(userId);
     }
 }
