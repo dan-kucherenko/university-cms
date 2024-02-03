@@ -42,6 +42,19 @@ public class CoursesController {
         return "edit/course";
     }
 
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("departments", departmentService.getAllDepartments());
+        model.addAttribute("course", new Course());
+        return "create/course";
+    }
+
+    @PostMapping("/create")
+    public String processCreateForm(@ModelAttribute Course course) {
+        courseService.saveCourse(course);
+        return "redirect:/courses";
+    }
+
     @PatchMapping("/edit")
     public String processEditForm(@RequestBody Course course) {
         courseService.updateCourse(course.getCourseId(), course);
