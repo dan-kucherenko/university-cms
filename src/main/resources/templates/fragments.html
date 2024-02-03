@@ -23,7 +23,7 @@
                     class="nav-item"><a class="nav-link" href="/administrators">Administrators</a></li>
                 <li sec:authorize="hasAuthority('SUPERADMIN')"
                     class="nav-item"><a class="nav-link" th:href="@{/administrators/manage-roles}">Manage Roles</a></li>
-                <li sec:authorize="hasAnyAuthority('ADMIN', 'SUPERADMIN', 'TEACHER')" class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
+                <li sec:authorize="hasAnyAuthority('ADMIN', 'SUPERADMIN', 'TEACHER', 'STUDENT')" class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
                 <li class="nav-item"><a class="nav-link" href="/departments">Departments</a></li>
                 <li class="nav-item"><a class="nav-link" href="/groups">Groups</a></li>
                 <li class="nav-item"><a class="nav-link" href="/lessons">Lessons</a></li>
