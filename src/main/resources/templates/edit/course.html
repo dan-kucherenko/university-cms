@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Course</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<body>
+
+<form th:object="${course}" onsubmit="editCourse(event)">
+    <input type="hidden" th:field="*{courseId}" id="courseId"/>
+
+    <label for="courseName">Course Name:</label>
+    <input type="text" id="courseName" th:field="*{courseName}"/>
+
+    <label for="courseDescription">Course Description:</label>
+    <textarea id="courseDescription" th:field="*{courseDescription}"></textarea>
+
+    <label for="department">Department:</label>
+    <select id="department" th:field="*{department}" >
+        <option th:each="dept : ${departments}" th:value="${dept.departmentId}"
+                th:text="${dept.departmentName}">
+        <input type="hidden" id="departmentName" th:value="${dept.departmentName}"/>
+        <input type="hidden" id="departmentSphere" th:value="${dept.departmentSphere}"/>
+        </option>
+    </select>
+    <input type="hidden" th:field="*{students}"/>
+    <button type="submit" onsubmit="alert('Course has been successfully edited')">Save Changes</button>
+
+</form>
+<script>
+    function editCourse() {
+        event.preventDefault();
+        let students = [];
+
+        $("#students option:selected").each(function () {
+            let student = {
+                id: $(this).val(),
+                username: $(this.username).data("username"),
+                firstName: $(this).data("firstName"),
+                lastName: $(this).data("lastName"),
+                email: $(this).data("email"),
+                password: $(this).data("password"),
+                phone: $(this).data("phone"),
+                role: $(this).data("role"),
+                group: $(this).data("group"),
+                dateOfBirth: $(this).data("dateOfBirth"),
+                yearOfStudy: $(this).data("yearOfStudy"),
+
+            };
+            students.push(student);
+        });
+
+        let course = {
+            courseId: $('#courseId').val(),
+            courseName: $('#courseName').val(),
+            courseDescription: $('#courseDescription').val(),
+            department: {
+                departmentId: $('#department').val(),
+                departmentName: $('#departmentName').val(),
+                departmentSphere: $('#departmentSphere').val()
+            },
+            students: students
+        };
+
+        fetch('http://localhost:8080/courses/edit', {
+            method: 'PATCH',
+            body: JSON.stringify(course),
+            headers: {'Content-type': 'application/json'}
+        }).then((res) => {
+            if (!res.ok) {
+                alert("There is an error");
+                return res;
+            }
+        }).then((res) => {
+            alert("Course has been changed");
+            window.location.href = 'http://localhost:8080/courses';
+        });
+    }
+</script>
+</body>
+</html>
