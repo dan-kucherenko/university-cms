@@ -66,12 +66,7 @@
             method: 'PATCH',
             body: JSON.stringify(course),
             headers: {'Content-type': 'application/json'}
-        }).then((res) => {
-            if (!res.ok) {
-                alert("There is an error");
-                return res;
-            }
-        }).then((res) => {
+        }).then(() => {
             alert("Course has been changed");
             window.location.href = 'http://localhost:8080/courses';
         });
